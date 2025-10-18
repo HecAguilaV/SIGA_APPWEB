@@ -580,7 +580,7 @@
   }
 
   .panel-asistente {
-    position: fixed;
+    position: absolute;
     width: 320px;
     height: 450px;
     background: #ffffff;

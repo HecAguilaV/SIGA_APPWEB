@@ -18,10 +18,10 @@
 <footer class="footer">
   <div class="content has-text-centered">
     <p>
-      <strong>SIGA</strong> - Sistema Inteligente de Gestión de Almacenes
+      <strong>SIGA</strong> - Sistema Inteligente de Gestión de Activos
     </p>
     <p>
-      <small>© 2025 Todos los derechos reservados | Desarrollado con ❤️</small>
+      <small>© 2025 Todos los derechos reservados | Desarrollado por un soñador con poca RAM</small>
     </p>
   </div>
 </footer>
