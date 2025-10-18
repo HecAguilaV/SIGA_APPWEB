@@ -17,8 +17,8 @@
   let offsetX = 0;
   let offsetY = 0;
   let estaRedimensionando = false;
-  let panelWidth = typeof window !== 'undefined' && window.innerWidth < 600 ? window.innerWidth - 30 : 320;
-  let panelHeight = typeof window !== 'undefined' && window.innerHeight < 600 ? 400 : 550;
+  let panelWidth = 320;
+  let panelHeight = 550;
   let resizeOffsetX = 0;
   let resizeOffsetY = 0;
   /** @type {HTMLButtonElement | undefined} */
@@ -394,6 +394,12 @@
   // Inicializar Web Speech API cuando se monta el componente
   onMount(() => {
     inicializarVoz();
+    
+    // Ajustar tamaño del panel en mobile
+    if (window.innerWidth < 600) {
+      panelWidth = Math.max(280, window.innerWidth - 30);
+      panelHeight = Math.min(400, window.innerHeight - 100);
+    }
   });
 
   // Auto-scroll a mensajes nuevos
