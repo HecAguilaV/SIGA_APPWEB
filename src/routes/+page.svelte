@@ -4,6 +4,12 @@
   let localSeleccionado = 0;
   let ordenarPor = 'nombre';
   let ordenAscendente = true;
+  let mostrarFormulario = false;
+  let formulario = {
+    nombre: '',
+    sku: '',
+    categoria: ''
+  };
 
   // Esta reacción asegura que siempre tengamos un local activo cuando el store cargue datos
   // Propósito: evitar que la tabla se renderice vacía y guiar al usuario con una selección por defecto
@@ -79,6 +85,41 @@
     const elemento = /** @type {HTMLSelectElement} */ (evento.currentTarget);
     localSeleccionado = Number(elemento.value);
   };
+
+  /**
+   * Crear producto a través del formulario tradicional
+   */
+  const crearProducto = async () => {
+    if (!formulario.nombre.trim() || !formulario.categoria.trim()) {
+      alert('Por favor completa los campos obligatorios');
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/productos/crear', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nombre: formulario.nombre,
+          categoria: formulario.categoria,
+          sku: formulario.sku || undefined
+        })
+      });
+
+      const datos = await res.json();
+      if (datos.success) {
+        datosNegocio.set(datos.datos);
+        formulario = { nombre: '', sku: '', categoria: '' };
+        mostrarFormulario = false;
+        alert('✅ Producto creado exitosamente');
+      } else {
+        alert('❌ Error al crear producto');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      alert('❌ Error en la conexión');
+    }
+  };
 </script>
 
 <section class="section">
@@ -123,6 +164,80 @@
   <div class="box">
     <h2 class="title is-3 has-text-weight-semibold">Stock por sucursal</h2>
     <p class="subtitle is-5">Visualiza el inventario en tiempo real. Ordena por lo que necesites y actúa al instante.</p>
+
+    <!-- Botón para mostrar/ocultar formulario -->
+    <div class="mb-5">
+      <button 
+        class="button is-info is-outlined"
+        on:click={() => (mostrarFormulario = !mostrarFormulario)}
+      >
+        {mostrarFormulario ? '✖ Cancelar' : '+ Agregar Producto'}
+      </button>
+    </div>
+
+    <!-- Formulario tradicional -->
+    {#if mostrarFormulario}
+      <div class="box" style="background-color: rgba(0, 180, 216, 0.05); margin-bottom: 2rem;">
+        <h3 class="title is-5">Crear Nuevo Producto</h3>
+        <div class="columns">
+          <div class="column is-half">
+            <div class="field">
+              <label class="label">Nombre del Producto *</label>
+              <div class="control">
+                <input 
+                  class="input" 
+                  type="text"
+                  placeholder="Ej: Rollos de Canela"
+                  bind:value={formulario.nombre}
+                />
+              </div>
+            </div>
+          </div>
+          <div class="column is-half">
+            <div class="field">
+              <label class="label">SKU (Opcional)</label>
+              <div class="control">
+                <input 
+                  class="input" 
+                  type="text"
+                  placeholder="Ej: RC-001"
+                  bind:value={formulario.sku}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Categoría *</label>
+          <div class="control">
+            <input 
+              class="input" 
+              type="text"
+              placeholder="Ej: Pastelería"
+              bind:value={formulario.categoria}
+            />
+          </div>
+        </div>
+        <div class="field is-grouped">
+          <div class="control">
+            <button 
+              class="button is-success"
+              on:click={crearProducto}
+            >
+              Crear Producto
+            </button>
+          </div>
+          <div class="control">
+            <button 
+              class="button is-light"
+              on:click={() => (mostrarFormulario = false)}
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+    {/if}
 
     <!-- Botones de selección de locales (horizontales con espaciado simétrico) -->
     <div class="local-selector mt-5 mb-5">

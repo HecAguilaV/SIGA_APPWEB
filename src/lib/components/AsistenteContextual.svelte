@@ -18,7 +18,7 @@
   let offsetY = 0;
   let estaRedimensionando = false;
   let panelWidth = 320;
-  let panelHeight = 450;
+  let panelHeight = 550;
   let resizeOffsetX = 0;
   let resizeOffsetY = 0;
   /** @type {HTMLButtonElement | undefined} */
@@ -294,7 +294,7 @@
     if (!estaRedimensionando) return;
     
     const deltaY = evento.clientY - resizeOffsetY;
-    panelHeight = Math.max(300, Math.min(panelHeight - deltaY, window.innerHeight - 50));
+    panelHeight = Math.max(400, Math.min(panelHeight - deltaY, window.innerHeight - 100));
     
     resizeOffsetY = evento.clientY;
   };
@@ -607,7 +607,7 @@
 
   .panel-asistente {
     position: fixed;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.95);
     border: 1px solid var(--color-borde);
     border-radius: 16px;
     box-shadow: 0 20px 60px rgba(3, 4, 94, 0.2);
@@ -616,6 +616,7 @@
     overflow: hidden;
     animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     user-select: none;
+    backdrop-filter: blur(8px);
   }
 
   @keyframes slideUp {
@@ -719,9 +720,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    background: #ffffff;
-    min-height: 180px;
-    max-height: 280px;
+    background: rgba(255, 255, 255, 0.7);
+    min-height: 150px;
   }
 
   .mensaje-bienvenida {
