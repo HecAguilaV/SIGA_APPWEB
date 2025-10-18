@@ -119,7 +119,6 @@
           <div class="buttons is-centered">
             <a class="button is-link is-medium" href="/">Explorar el Inventario</a>
             <a class="button is-link is-light is-medium" href="/analisis">Ver Insights</a>
-            <a class="button is-link is-light is-medium" href="/asistente">Hablar con IA</a>
           </div>
         </div>
       </div>
