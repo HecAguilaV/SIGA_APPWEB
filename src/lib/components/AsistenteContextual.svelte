@@ -959,21 +959,36 @@
 
   @media screen and (max-width: 768px) {
     .asistente-contextual {
-      bottom: 1rem;
-      right: 1rem;
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      top: 0;
+      z-index: 999;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.3);
     }
 
     .toggle-asistente {
       width: 52px;
       height: 52px;
       font-size: 1.75rem;
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
     }
 
     .panel-asistente {
       width: calc(100vw - 2rem) !important;
-      max-width: 380px !important;
-      height: calc(100vh - 120px) !important;
-      max-height: 80vh !important;
+      height: 70vh !important;
+      position: fixed !important;
+      bottom: 1rem !important;
+      right: 1rem !important;
+      left: 1rem !important;
+      top: auto !important;
     }
   }
 </style>
