@@ -177,44 +177,47 @@
 
     <!-- Formulario tradicional -->
     {#if mostrarFormulario}
-      <div class="box" style="background-color: rgba(0, 180, 216, 0.05); margin-bottom: 2rem;">
-        <h3 class="title is-5">Crear Nuevo Producto</h3>
+      <div class="box formulario-producto" style="margin-bottom: 2rem; background-color: #ffffff; border: 2px solid var(--color-secundario);">
+        <h3 class="title is-5" style="color: var(--color-primario);">Crear Nuevo Producto</h3>
         <div class="columns">
           <div class="column is-half">
             <div class="field">
-              <label class="label">Nombre del Producto *</label>
+              <label class="label" style="color: var(--color-primario); font-weight: 600;">Nombre del Producto *</label>
               <div class="control">
                 <input 
                   class="input" 
                   type="text"
                   placeholder="Ej: Rollos de Canela"
                   bind:value={formulario.nombre}
+                  style="color: #333; background-color: #ffffff; border: 1px solid var(--color-secundario);"
                 />
               </div>
             </div>
           </div>
           <div class="column is-half">
             <div class="field">
-              <label class="label">SKU (Opcional)</label>
+              <label class="label" style="color: var(--color-primario); font-weight: 600;">SKU (Opcional)</label>
               <div class="control">
                 <input 
                   class="input" 
                   type="text"
                   placeholder="Ej: RC-001"
                   bind:value={formulario.sku}
+                  style="color: #333; background-color: #ffffff; border: 1px solid var(--color-secundario);"
                 />
               </div>
             </div>
           </div>
         </div>
         <div class="field">
-          <label class="label">Categoría *</label>
+          <label class="label" style="color: var(--color-primario); font-weight: 600;">Categoría *</label>
           <div class="control">
             <input 
               class="input" 
               type="text"
               placeholder="Ej: Pastelería"
               bind:value={formulario.categoria}
+              style="color: #333; background-color: #ffffff; border: 1px solid var(--color-secundario);"
             />
           </div>
         </div>
