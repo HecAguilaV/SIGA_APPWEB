@@ -16,6 +16,11 @@
   let estaArrastrando = false;
   let offsetX = 0;
   let offsetY = 0;
+  let estaRedimensionando = false;
+  let panelWidth = 320;
+  let panelHeight = 450;
+  let resizeOffsetX = 0;
+  let resizeOffsetY = 0;
   /** @type {HTMLButtonElement | undefined} */
   let botonToggle;
   /** @type {HTMLDivElement | undefined} */
@@ -279,6 +284,30 @@
     estaArrastrando = false;
   };
 
+  const iniciarResize = (evento) => {
+    if (evento.button !== 0) return;
+    estaRedimensionando = true;
+    resizeOffsetX = evento.clientX;
+    resizeOffsetY = evento.clientY;
+  };
+
+  const manejarResize = (evento) => {
+    if (!estaRedimensionando) return;
+    
+    const deltaX = evento.clientX - resizeOffsetX;
+    const deltaY = evento.clientY - resizeOffsetY;
+    
+    panelWidth = Math.max(280, Math.min(panelWidth + deltaX, window.innerWidth - posX - 10));
+    panelHeight = Math.max(300, Math.min(panelHeight + deltaY, window.innerHeight - posY - 10));
+    
+    resizeOffsetX = evento.clientX;
+    resizeOffsetY = evento.clientY;
+  };
+
+  const finalizarResize = () => {
+    estaRedimensionando = false;
+  };
+
   /**
    * Inicializa Web Speech API para entrada de voz
    */
@@ -382,7 +411,7 @@
   }
 </script>
 
-<svelte:window on:mousemove={manejarMovimiento} on:mouseup={finalizarArrastre} />
+<svelte:window on:mousemove={(e) => { manejarMovimiento(e); manejarResize(e); }} on:mouseup={() => { finalizarArrastre(); finalizarResize(); }} />
 
 <div class="asistente-contextual {estaAbierto ? 'is-open' : ''}">
   <button
@@ -400,7 +429,7 @@
     <div
       class="panel-asistente"
       bind:this={panelElement}
-      style="left: {posX}px; top: {posY}px; cursor: {estaArrastrando ? 'grabbing' : 'default'}"
+      style="left: {posX}px; top: {posY}px; width: {panelWidth}px; height: {panelHeight}px; cursor: {estaArrastrando ? 'grabbing' : estaRedimensionando ? 'nwse-resize' : 'default'}"
     >
       <div class="panel-header" on:mousedown={iniciarArrastre} role="application">
         <h3>🤖 SIGA Asistente</h3>
@@ -510,6 +539,8 @@
           </button>
         </div>
       </form>
+      
+      <div class="resize-handle" on:mousedown={iniciarResize} role="button" tabindex="0" title="Arrastra para redimensionar"></div>
     </div>
   {/if}
 </div>
@@ -581,8 +612,6 @@
 
   .panel-asistente {
     position: absolute;
-    width: 320px;
-    height: 450px;
     background: #ffffff;
     border: 1px solid var(--color-borde);
     border-radius: 16px;
@@ -908,6 +937,23 @@
     padding: 0.5rem;
     margin-top: 0.5rem;
     border: 1px solid var(--color-borde);
+  }
+
+  .resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    cursor: nwse-resize;
+    background: linear-gradient(135deg, transparent 50%, var(--color-secundario) 50%);
+    border-radius: 0 0 16px 0;
+    opacity: 0.3;
+    transition: opacity 0.2s ease;
+  }
+
+  .resize-handle:hover {
+    opacity: 0.7;
   }
 
   @media screen and (max-width: 768px) {
