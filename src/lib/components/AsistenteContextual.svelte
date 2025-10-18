@@ -17,8 +17,8 @@
   let offsetX = 0;
   let offsetY = 0;
   let estaRedimensionando = false;
-  let panelWidth = 320;
-  let panelHeight = 550;
+  let panelWidth = typeof window !== 'undefined' && window.innerWidth < 600 ? window.innerWidth - 30 : 320;
+  let panelHeight = typeof window !== 'undefined' && window.innerHeight < 600 ? 400 : 550;
   let resizeOffsetX = 0;
   let resizeOffsetY = 0;
   /** @type {HTMLButtonElement | undefined} */
