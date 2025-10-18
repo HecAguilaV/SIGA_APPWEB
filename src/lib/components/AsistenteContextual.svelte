@@ -964,9 +964,10 @@
     }
 
     .panel-asistente {
-      width: calc(100vw - 2rem);
-      max-width: 380px;
-      max-height: 500px;
+      width: calc(100vw - 2rem) !important;
+      max-width: 380px !important;
+      height: calc(100vh - 120px) !important;
+      max-height: 80vh !important;
     }
   }
 </style>
