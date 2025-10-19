@@ -549,7 +549,7 @@
 <style>
   .asistente-contextual {
     position: fixed;
-    top: 2rem;
+    bottom: 2rem;
     right: 2rem;
     z-index: 999;
     font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
@@ -623,6 +623,7 @@
     animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     user-select: none;
     backdrop-filter: blur(8px);
+    transform: translateY(-80px);
   }
 
   @keyframes slideUp {
@@ -960,26 +961,22 @@
   @media screen and (max-width: 768px) {
     .asistente-contextual {
       position: fixed;
-      bottom: 0;
-      right: 0;
-      left: 0;
-      top: 0;
+      bottom: 1rem;
+      right: 1rem;
       z-index: 999;
       display: flex;
+      flex-direction: column;
       align-items: flex-end;
       justify-content: flex-end;
-      padding: 1rem;
-      background: rgba(0, 0, 0, 0.3);
       pointer-events: none;
+      gap: 1rem;
     }
 
     .toggle-asistente {
       width: 52px;
       height: 52px;
       font-size: 1.75rem;
-      position: absolute;
-      bottom: 1rem;
-      right: 1rem;
+      position: relative;
       pointer-events: auto;
     }
 
@@ -987,7 +984,7 @@
       width: calc(100vw - 2rem) !important;
       height: 70vh !important;
       position: fixed !important;
-      bottom: 1rem !important;
+      bottom: 5rem !important;
       right: 1rem !important;
       left: 1rem !important;
       top: auto !important;
