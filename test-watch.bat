@@ -1,7 +1,7 @@
 @echo off
 REM ============================================
-REM   SIGA - Dev Server Launcher
-REM   No requiere cambiar política de PowerShell
+REM   SIGA - Watch Tests (Auto-run)
+REM   Sin necesidad de PowerShell
 REM ============================================
 
 setlocal enabledelayedexpansion
@@ -10,24 +10,26 @@ cd /d "c:\Users\hdagu\Documents\SIGA_PROTOTIPO"
 
 echo.
 echo ============================================
-echo   SIGA - Dev Server
+echo   SIGA - Testing Suite (Watch Mode)
 echo ============================================
 echo.
-echo Verificando Node.js...
-node.exe --version
+echo Los tests se ejecutaran automaticamente
+echo cuando hagas cambios en los archivos
+echo.
+echo Presiona Ctrl+C para detener
+echo.
 
 REM Instalar dependencias si no existen
 if not exist node_modules (
-    echo.
-    echo [1/2] Instalando dependencias (Jasmine, Karma, etc)...
+    echo [1/2] Instalando dependencias...
     call npm install
     echo.
 )
 
-REM Iniciar servidor de desarrollo
-echo [2/2] Iniciando servidor en http://localhost:5173...
-echo.
-echo Ctrl+C para detener el servidor
+REM Watch tests
+echo [2/2] Iniciando watch mode...
 echo.
 
-call npm run dev
+call npm run test:watch
+
+pause

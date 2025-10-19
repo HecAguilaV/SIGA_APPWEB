@@ -1,7 +1,7 @@
 @echo off
 REM ============================================
-REM   SIGA - Dev Server Launcher
-REM   No requiere cambiar política de PowerShell
+REM   SIGA - Build Production
+REM   Sin necesidad de PowerShell
 REM ============================================
 
 setlocal enabledelayedexpansion
@@ -10,24 +10,27 @@ cd /d "c:\Users\hdagu\Documents\SIGA_PROTOTIPO"
 
 echo.
 echo ============================================
-echo   SIGA - Dev Server
+echo   SIGA - Build Production
 echo ============================================
 echo.
-echo Verificando Node.js...
-node.exe --version
 
 REM Instalar dependencias si no existen
 if not exist node_modules (
-    echo.
-    echo [1/2] Instalando dependencias (Jasmine, Karma, etc)...
+    echo [1/2] Instalando dependencias...
     call npm install
     echo.
 )
 
-REM Iniciar servidor de desarrollo
-echo [2/2] Iniciando servidor en http://localhost:5173...
-echo.
-echo Ctrl+C para detener el servidor
+REM Build
+echo [2/2] Compilando para producción...
 echo.
 
-call npm run dev
+call npm run build
+
+echo.
+echo ============================================
+echo   Build completado! Versión lista para Vercel
+echo ============================================
+echo.
+
+pause
