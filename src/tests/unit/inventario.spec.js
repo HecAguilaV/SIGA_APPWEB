@@ -1,13 +1,13 @@
 // ============================================
-// TESTS UNITARIOS - GESTIÓN DE INVENTARIO
+// [UNIT] TESTS - Gestión de Inventario
 // ============================================
 
-describe('Tests Unitarios - Inventario', () => {
+describe('[UNIT] Inventario - Estructura y Búsqueda', () => {
 
   // ✅ TEST 1: Estructura de datos del inventario
-  describe('Estructura de Inventario', () => {
+  describe('Crear Producto', () => {
     
-    it('producto debe tener id, nombre, sku y stock', () => {
+    it('[CREATE] Producto debe tener id, nombre, SKU y stock', () => {
       const producto = {
         id: 1,
         nombre: 'Laptop Dell',
@@ -25,7 +25,7 @@ describe('Tests Unitarios - Inventario', () => {
       expect(producto.stock).toBeDefined();
     });
 
-    it('cada local debe tener stock numérico', () => {
+    it('[VALIDATE] Stock en cada local debe ser numérico', () => {
       const stock = {
         'Central': 50,
         'Ibáñez': 30,
@@ -119,7 +119,7 @@ describe('Tests Unitarios - Inventario', () => {
       ];
 
       const electronica = productos.filter(p => p.categoria === 'Electrónica');
-      expect(electronica).toHaveLength(2);
+      expect(electronica.length).toBe(2);
     });
 
     it('filtrar por stock mínimo', () => {
@@ -130,7 +130,7 @@ describe('Tests Unitarios - Inventario', () => {
       ];
 
       const conStock = productos.filter(p => p.stock >= 10);
-      expect(conStock).toHaveLength(2);
+      expect(conStock.length).toBe(2);
     });
 
   });

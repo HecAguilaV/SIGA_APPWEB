@@ -5,7 +5,8 @@ REM   Sin necesidad de PowerShell
 REM ============================================
 
 setlocal enabledelayedexpansion
-set PATH=C:\Users\hdagu\.nodejs\node-v20.11.0-win-x64;%PATH%
+set NODE_PATH=C:\Users\hdagu\.nodejs\node-v20.11.0-win-x64
+set PATH=%NODE_PATH%;%PATH%
 cd /d "c:\Users\hdagu\Documents\SIGA_PROTOTIPO"
 
 echo.
@@ -17,7 +18,7 @@ echo.
 REM Instalar dependencias si no existen
 if not exist node_modules (
     echo [1/2] Instalando dependencias...
-    call npm install
+    call %NODE_PATH%\npm.cmd install --legacy-peer-deps
     echo.
 )
 
@@ -25,6 +26,6 @@ REM Ejecutar tests
 echo [2/2] Ejecutando tests...
 echo.
 
-call npm test
+call %NODE_PATH%\npm.cmd test
 
 pause

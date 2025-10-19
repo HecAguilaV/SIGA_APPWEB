@@ -112,7 +112,7 @@ describe('Tests de Integración - CRUD', () => {
       
       productos = eliminarProducto(productos, 2);
       
-      expect(productos).toHaveLength(2);
+      expect(productos.length).toBe(2);
       expect(productos.find(p => p.id === 2)).toBeUndefined();
     });
 
@@ -126,7 +126,7 @@ describe('Tests de Integración - CRUD', () => {
       let productos = [];
       const producto = { id: 1, nombre: 'Laptop', precio: 1000 };
       productos.push(producto);
-      expect(productos).toHaveLength(1);
+      expect(productos.length).toBe(1);
 
       // 2. Leer
       const obtenido = productos.find(p => p.id === 1);
@@ -139,7 +139,7 @@ describe('Tests de Integración - CRUD', () => {
 
       // 4. Eliminar
       productos = productos.filter(p => p.id !== 1);
-      expect(productos).toHaveLength(0);
+      expect(productos.length).toBe(0);
     });
 
   });

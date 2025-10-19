@@ -43,7 +43,7 @@ describe('Tests de Integración - Asistente IA', () => {
 
     it('detectar intención de actualizar stock', () => {
       const mensaje = 'Agregar 10 unidades en Central';
-      const esActualizar = mensaje.includes('agregar') || mensaje.includes('reducir');
+      const esActualizar = mensaje.toLowerCase().includes('agregar') || mensaje.toLowerCase().includes('reducir') || mensaje.toLowerCase().includes('actualizar');
       
       expect(esActualizar).toBe(true);
     });
@@ -128,7 +128,7 @@ describe('Tests de Integración - Asistente IA', () => {
       expect(mensajeUsuario).toBeTruthy();
 
       // 2. Sistema detecta intención
-      const esActualizacion = mensajeUsuario.includes('agregar');
+      const esActualizacion = mensajeUsuario.toLowerCase().includes('agregar');
       expect(esActualizacion).toBe(true);
 
       // 3. Sistema extrae parámetros

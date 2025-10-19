@@ -71,7 +71,7 @@ describe('Pruebas con Arrays', () => {
 
   it('el array debe tener 3 elementos', () => {
     const items = ['item1', 'item2', 'item3'];
-    expect(items).toHaveLength(3);
+    expect(items.length).toBe(3);
   });
 
 });

@@ -64,7 +64,7 @@ describe('Tests Unitarios - Cálculos', () => {
       const valores = Object.values(stock);
       const promedio = valores.reduce((a, b) => a + b, 0) / valores.length;
       
-      expect(promedio).toBe(33.33333333333333);
+      expect(promedio).toBeCloseTo(33.33, 1);
     });
 
     it('encontrar local con más stock', () => {

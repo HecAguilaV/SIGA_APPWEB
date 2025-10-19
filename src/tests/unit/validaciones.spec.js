@@ -98,7 +98,7 @@ describe('Tests Unitarios - Validaciones', () => {
 
     it('array debe tener longitud esperada', () => {
       const items = ['a', 'b', 'c'];
-      expect(items).toHaveLength(3);
+      expect(items.length).toBe(3);
     });
 
   });
