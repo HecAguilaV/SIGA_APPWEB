@@ -549,7 +549,7 @@
 <style>
   .asistente-contextual {
     position: fixed;
-    bottom: 2rem;
+    top: 2rem;
     right: 2rem;
     z-index: 999;
     font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
@@ -970,6 +970,7 @@
       justify-content: flex-end;
       padding: 1rem;
       background: rgba(0, 0, 0, 0.3);
+      pointer-events: none;
     }
 
     .toggle-asistente {
@@ -979,6 +980,7 @@
       position: absolute;
       bottom: 1rem;
       right: 1rem;
+      pointer-events: auto;
     }
 
     .panel-asistente {
@@ -989,6 +991,7 @@
       right: 1rem !important;
       left: 1rem !important;
       top: auto !important;
+      pointer-events: auto;
     }
   }
 </style>
