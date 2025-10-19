@@ -4,8 +4,7 @@ module.exports = function(config) {
     basePath: '',
     frameworks: ['jasmine'],
     files: [
-      'src/**/*.spec.js',
-      'src/**/*.test.js'
+      'src/tests/**/*.spec.js'
     ],
     exclude: [],
     preprocessors: {
