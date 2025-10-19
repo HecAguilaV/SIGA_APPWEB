@@ -127,6 +127,46 @@ git push origin main
 - Probar: escribir "crear producto test" en el asistente
 - Verificar que tabla se actualiza
 
+## 🧪 Testing (Opcional - Desarrollo)
+
+Tests con **Jasmine** y **Karma** para validar lógica:
+
+```bash
+# Instalar dependencias (solo primera vez)
+npm install
+
+# Ejecutar tests una sola vez
+npm test
+
+# Modo watch (auto-ejecuta al guardar)
+npm run test:watch
+
+# Tests en CI/CD (Chrome headless)
+npm run test:ci
+```
+
+**📚 Documentación de testing:**
+- `TESTING.md` - Guía técnica de Karma/Jasmine
+- `GUIA_TESTING_JUNIOR.md` - Comparativa Jasmine vs JUnit vs Postman
+- `src/tests/example.spec.js` - Ejemplos básicos
+
+**⚠️ Nota:** Tests son **opcionales** y no afectan el build de Vercel (`npm run build`). Úsalos para validar tu código durante desarrollo.
+
+## 🔄 Swagger API Documentation
+
+Ver documentación interactiva de APIs:
+
+```bash
+npm run dev
+# Abrir en navegador: http://localhost:5173/api-docs
+```
+
+Swagger UI muestra todos los endpoints, parámetros y permite probar directamente.
+
+**📚 Documentación:**
+- `SWAGGER.md` - Guía de uso de Swagger UI
+- OpenAPI spec: `/api/swagger.json`
+
 ## 🎯 Roadmap futuro
 
 - [ ] Historial de conversación (memoria contexto)
