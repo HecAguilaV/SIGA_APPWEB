@@ -24,11 +24,14 @@ describe('Operaciones CRUD de Inventario', () => {
     // 2. LEER producto
     const obtenido = productos.find(p => p.id === 1);
     expect(obtenido).toBeDefined();
-    expect(obtenido.nombre).toBe('Laptop');
+    
+    if (obtenido) {
+      expect(obtenido.nombre).toBe('Laptop');
 
-    // 3. ACTUALIZAR precio
-    obtenido.precio = 1500;
-    expect(obtenido.precio).toBe(1500);
+      // 3. ACTUALIZAR precio
+      obtenido.precio = 1500;
+      expect(obtenido.precio).toBe(1500);
+    }
 
     // 4. ELIMINAR producto
     productos = productos.filter(p => p.id !== 1);
