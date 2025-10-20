@@ -28,6 +28,7 @@ export const POST = async ({ request }) => {
       nombre,
       sku: skuFinal,
       categoria,
+      activo: true,
       stock
     };
 

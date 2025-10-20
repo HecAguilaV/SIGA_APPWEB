@@ -92,7 +92,35 @@
         const datos = await res.json();
         if (datos.success && datos.datos) {
           console.log('✅ Producto creado:', datos.producto);
-          // Actualizar la store con los datos nuevos
+          datosNegocio.set(datos.datos);
+        }
+      } else if (crud.accion === 'editar_producto') {
+        const res = await fetch('/api/productos/editar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: crud.id,
+            nombre: crud.nombre,
+            categoria: crud.categoria,
+            sku: crud.sku
+          })
+        });
+        const datos = await res.json();
+        if (datos.success && datos.datos) {
+          console.log('✅ Producto editado:', datos.producto);
+          datosNegocio.set(datos.datos);
+        }
+      } else if (crud.accion === 'eliminar_producto') {
+        const res = await fetch('/api/productos/eliminar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: crud.id
+          })
+        });
+        const datos = await res.json();
+        if (datos.success && datos.datos) {
+          console.log('✅ Producto desactivado:', datos.producto);
           datosNegocio.set(datos.datos);
         }
       } else if (crud.accion === 'agregar_stock' || crud.accion === 'reducir_stock') {
@@ -109,7 +137,6 @@
         const datos = await res.json();
         if (datos.success && datos.datos) {
           console.log('✅ Stock actualizado:', datos.mensaje);
-          // Actualizar la store con los datos nuevos
           datosNegocio.set(datos.datos);
         }
       }

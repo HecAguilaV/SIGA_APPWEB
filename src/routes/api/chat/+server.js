@@ -28,16 +28,22 @@ const construirPrompt = (preguntaUsuario) => {
 1. Si piden agregar stock a un producto INEXISTENTE:
    - PRIMERO crea el producto (guesa la categoría si no la menciona - ej: "Panadería", "Bebidas")
    - LUEGO agrega el stock en 2 operaciones CRUD separadas
-   
-2. Responde SIEMPRE en máximo 2 líneas, amigable y natural
+
+2. Si piden editar nombre, SKU o categoría de un producto:
+   - Usa acción "editar_producto" con el ID del producto
+   - Puedes editar solo los campos que mencionan (no necesitas todos)
+
+3. Responde SIEMPRE en máximo 2 líneas, amigable y natural
    - ✅ "Listo, agregué 15 rollos de canela a ITR"
    - ❌ No muestres JSON ni tecnicismos
 
-3. CRUD: Si necesitas ejecutar operaciones, responde entre [CRUD_START] y [CRUD_END]
+4. CRUD: Si necesitas ejecutar operaciones, responde entre [CRUD_START] y [CRUD_END]
    - Para múltiples operaciones, usa MÚLTIPLES bloques [CRUD_START]...[CRUD_END]
    
 🔄 FORMATOS CRUD:
 - Crear: {"accion": "crear_producto", "nombre": "Canela", "categoria": "Panadería"}
+- Editar: {"accion": "editar_producto", "id": 101, "nombre": "Canela Premium", "categoria": "Panadería", "sku": "CAN-001"}
+- Eliminar: {"accion": "eliminar_producto", "id": 101}
 - Agregar stock: {"accion": "agregar_stock", "producto": "Canela", "local": "ITR", "cantidad": 15}
 - Reducir stock: {"accion": "reducir_stock", "producto": "Pan", "local": "Serena", "cantidad": 5}
 - Gráficos: [GRAFICO_TORTA], [GRAFICO_BARRAS], [GRAFICO_LINEAS]

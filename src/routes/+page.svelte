@@ -1,11 +1,19 @@
-<script>
+<script lang="ts">
   import { datosNegocio } from '$lib/datosSimulados.js';
 
   let localSeleccionado = 0;
   let ordenarPor = 'nombre';
   let ordenAscendente = true;
   let mostrarFormulario = false;
+  let mostrarEdicion = false;
+  let productoEditando = null;
   let formulario = {
+    nombre: '',
+    sku: '',
+    categoria: ''
+  };
+  let formularioEdicion = {
+    id: null,
     nombre: '',
     sku: '',
     categoria: ''
@@ -22,11 +30,13 @@
 
   // Computamos los productos con el stock filtrado según el local seleccionado
   // Propósito: mostrar información relevante de inventario de manera rápida
-  $: productosFiltrados = ($datosNegocio.productos ?? []).map((producto) => {
-    const stockPorLocal = /** @type {Record<string, number>} */ (producto.stock ?? {});
-    const stockActual = stockPorLocal[String(localSeleccionado)] ?? 0;
-    return { ...producto, stockActual };
-  });
+  $: productosFiltrados = ($datosNegocio.productos ?? [])
+    .filter((producto: any) => producto.activo !== false)
+    .map((producto: any) => {
+      const stockPorLocal = (producto.stock ?? {}) as Record<string | number, number>;
+      const stockActual = stockPorLocal[localSeleccionado] ?? stockPorLocal[String(localSeleccionado)] ?? 0;
+      return { ...producto, stockActual };
+    });
 
   // Aplicar ordenamiento a los productos
   $: productosOrdenados = [...productosFiltrados].sort((a, b) => {
@@ -55,7 +65,7 @@
    * Cambia el criterio de ordenamiento
    * @param {string} columna
    */
-  const cambiarOrdenamiento = (columna) => {
+  const cambiarOrdenamiento = (columna: string) => {
     if (ordenarPor === columna) {
       // Si ya estamos ordenando por esta columna, invertir el orden
       ordenAscendente = !ordenAscendente;
@@ -70,7 +80,7 @@
    * Retorna el indicador visual del ordenamiento
    * @param {string} columna
    */
-  const obtenerIndicador = (columna) => {
+  const obtenerIndicador = (columna: string) => {
     if (ordenarPor !== columna) return '';
     return ordenAscendente ? ' ↑' : ' ↓';
   };
@@ -80,10 +90,12 @@
    * Propósito: mantener sincronizado el filtro del inventario con la preferencia del usuario.
    * @param {Event} evento
    */
-  const cambiarLocal = (evento) => {
+  const cambiarLocal = (evento: Event) => {
     // Propósito: actualizar el filtro de local de forma controlada
-    const elemento = /** @type {HTMLSelectElement} */ (evento.currentTarget);
-    localSeleccionado = Number(elemento.value);
+    const elemento = evento.currentTarget as HTMLSelectElement;
+    if (elemento) {
+      localSeleccionado = Number(elemento.value);
+    }
   };
 
   /**
@@ -114,6 +126,95 @@
         alert('✅ Producto creado exitosamente');
       } else {
         alert('❌ Error al crear producto');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      alert('❌ Error en la conexión');
+    }
+  };
+
+  /**
+   * Abre el formulario de edición con los datos del producto
+   */
+  const abrirEdicion = (producto: any) => {
+    formularioEdicion = {
+      id: producto.id,
+      nombre: producto.nombre,
+      sku: producto.sku,
+      categoria: producto.categoria
+    };
+    productoEditando = producto;
+    mostrarEdicion = true;
+  };
+
+  /**
+   * Editar producto a través del formulario
+   */
+  const editarProducto = async () => {
+    if (!formularioEdicion.nombre.trim() || !formularioEdicion.categoria.trim()) {
+      alert('Por favor completa los campos obligatorios');
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/productos/editar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: formularioEdicion.id,
+          nombre: formularioEdicion.nombre,
+          sku: formularioEdicion.sku || undefined,
+          categoria: formularioEdicion.categoria
+        })
+      });
+
+      const datos = await res.json();
+      if (datos.success) {
+        datosNegocio.set(datos.datos);
+        mostrarEdicion = false;
+        formularioEdicion = { id: null, nombre: '', sku: '', categoria: '' };
+        alert('✅ Producto actualizado exitosamente');
+      } else {
+        alert('❌ Error al actualizar producto');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      alert('❌ Error en la conexión');
+    }
+  };
+
+  /**
+   * Cierra el formulario de edición
+   */
+  const cerrarEdicion = () => {
+    mostrarEdicion = false;
+    formularioEdicion = { id: null, nombre: '', sku: '', categoria: '' };
+    productoEditando = null;
+  };
+
+  /**
+   * Elimina/desactiva un producto
+   */
+  const eliminarProducto = async (producto: any) => {
+    const confirmacion = confirm(
+      `⚠️ ¿Estás seguro de que deseas desactivar "${producto.nombre}"?\n\nEsta acción ocultará el producto de la lista pero no eliminará su historial de ventas.`
+    );
+
+    if (!confirmacion) return;
+
+    try {
+      const res = await fetch('/api/productos/eliminar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: producto.id })
+      });
+
+      const datos = await res.json();
+      if (datos.success) {
+        datosNegocio.set(datos.datos);
+        alert('✅ Producto desactivado exitosamente');
+      } else {
+        alert('❌ Error al desactivar producto');
       }
     } catch (err) {
       console.error('Error:', err);
@@ -182,9 +283,10 @@
         <div class="columns">
           <div class="column is-half">
             <div class="field">
-              <label class="label" style="color: var(--color-primario); font-weight: 600;">Nombre del Producto *</label>
+              <label class="label" style="color: var(--color-primario); font-weight: 600;" for="nombre_producto">Nombre del Producto *</label>
               <div class="control">
                 <input 
+                  id="nombre_producto"
                   class="input" 
                   type="text"
                   placeholder="Ej: Rollos de Canela"
@@ -196,9 +298,10 @@
           </div>
           <div class="column is-half">
             <div class="field">
-              <label class="label" style="color: var(--color-primario); font-weight: 600;">SKU (Opcional)</label>
+              <label class="label" style="color: var(--color-primario); font-weight: 600;" for="sku_producto">SKU (Opcional)</label>
               <div class="control">
                 <input 
+                  id="sku_producto"
                   class="input" 
                   type="text"
                   placeholder="Ej: RC-001"
@@ -210,9 +313,10 @@
           </div>
         </div>
         <div class="field">
-          <label class="label" style="color: var(--color-primario); font-weight: 600;">Categoría *</label>
+          <label class="label" style="color: var(--color-primario); font-weight: 600;" for="categoria_producto">Categoría *</label>
           <div class="control">
             <input 
+              id="categoria_producto"
               class="input" 
               type="text"
               placeholder="Ej: Pastelería"
@@ -272,6 +376,7 @@
               <th class="sortable-header has-text-right" on:click={() => cambiarOrdenamiento('stock')}>
                 Stock actual{obtenerIndicador('stock')}
               </th>
+              <th class="has-text-centered" style="width: 160px;">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -282,6 +387,26 @@
                   <td>{producto.sku}</td>
                   <td>{producto.categoria}</td>
                   <td class="has-text-right"><span class="status-critico">SIN STOCK</span></td>
+                  <td class="has-text-centered">
+                    <div class="buttons are-small" style="gap: 0.25rem; justify-content: center;">
+                      <button 
+                        class="button is-small is-info is-outlined"
+                        on:click={() => abrirEdicion(producto)}
+                        title="Editar producto"
+                        type="button"
+                      >
+                        ✎
+                      </button>
+                      <button 
+                        class="button is-small is-danger is-outlined"
+                        on:click={() => eliminarProducto(producto)}
+                        title="Eliminar producto"
+                        type="button"
+                      >
+                        🗑
+                      </button>
+                    </div>
+                  </td>
                 </tr>
               {:else if producto.stockActual < 5}
                 <tr style="background-color: rgba(245, 124, 0, 0.08);">
@@ -289,6 +414,26 @@
                   <td>{producto.sku}</td>
                   <td>{producto.categoria}</td>
                   <td class="has-text-right"><span class="status-advertencia">{producto.stockActual}</span></td>
+                  <td class="has-text-centered">
+                    <div class="buttons are-small" style="gap: 0.25rem; justify-content: center;">
+                      <button 
+                        class="button is-small is-info is-outlined"
+                        on:click={() => abrirEdicion(producto)}
+                        title="Editar producto"
+                        type="button"
+                      >
+                        ✎
+                      </button>
+                      <button 
+                        class="button is-small is-danger is-outlined"
+                        on:click={() => eliminarProducto(producto)}
+                        title="Eliminar producto"
+                        type="button"
+                      >
+                        🗑
+                      </button>
+                    </div>
+                  </td>
                 </tr>
               {:else}
                 <tr>
@@ -296,6 +441,26 @@
                   <td>{producto.sku}</td>
                   <td>{producto.categoria}</td>
                   <td class="has-text-right"><span class="status-normal">{producto.stockActual}</span></td>
+                  <td class="has-text-centered">
+                    <div class="buttons are-small" style="gap: 0.25rem; justify-content: center;">
+                      <button 
+                        class="button is-small is-info is-outlined"
+                        on:click={() => abrirEdicion(producto)}
+                        title="Editar producto"
+                        type="button"
+                      >
+                        ✎
+                      </button>
+                      <button 
+                        class="button is-small is-danger is-outlined"
+                        on:click={() => eliminarProducto(producto)}
+                        title="Eliminar producto"
+                        type="button"
+                      >
+                        🗑
+                      </button>
+                    </div>
+                  </td>
                 </tr>
               {/if}
             {/each}
@@ -303,6 +468,92 @@
         </table>
       </div>
     </div>
+
+    <!-- Modal de Edición de Producto -->
+    {#if mostrarEdicion}
+      <div class="modal is-active">
+        <button 
+          class="modal-background" 
+          on:click={cerrarEdicion}
+          aria-label="close"
+          type="button"
+        ></button>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Editar Producto</p>
+            <button 
+              class="delete" 
+              aria-label="close"
+              on:click={cerrarEdicion}
+              type="button"
+            ></button>
+          </header>
+          <section class="modal-card-body">
+            <div class="field">
+              <label class="label" style="color: var(--color-primario); font-weight: 600;" for="edit_nombre_producto">Nombre del Producto *</label>
+              <div class="control">
+                <input 
+                  id="edit_nombre_producto"
+                  class="input" 
+                  type="text"
+                  placeholder="Nombre del producto"
+                  bind:value={formularioEdicion.nombre}
+                  style="color: #333; background-color: #ffffff; border: 1px solid var(--color-secundario);"
+                />
+              </div>
+            </div>
+            <div class="columns">
+              <div class="column is-half">
+                <div class="field">
+                  <label class="label" style="color: var(--color-primario); font-weight: 600;" for="edit_sku_producto">SKU (Opcional)</label>
+                  <div class="control">
+                    <input 
+                      id="edit_sku_producto"
+                      class="input" 
+                      type="text"
+                      placeholder="Ej: RC-001"
+                      bind:value={formularioEdicion.sku}
+                      style="color: #333; background-color: #ffffff; border: 1px solid var(--color-secundario);"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="column is-half">
+                <div class="field">
+                  <label class="label" style="color: var(--color-primario); font-weight: 600;" for="edit_categoria_producto">Categoría *</label>
+                  <div class="control">
+                    <input 
+                      id="edit_categoria_producto"
+                      class="input" 
+                      type="text"
+                      placeholder="Ej: Pastelería"
+                      bind:value={formularioEdicion.categoria}
+                      style="color: #333; background-color: #ffffff; border: 1px solid var(--color-secundario);"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <footer class="modal-card-foot">
+            <button 
+              class="button is-light"
+              on:click={cerrarEdicion}
+              type="button"
+            >
+              Cancelar
+            </button>
+            <button 
+              class="button is-warning"
+              on:click={editarProducto}
+              type="button"
+            >
+              Guardar Cambios
+            </button>
+          </footer>
+        </div>
+      </div>
+    {/if}
   </div>
 </section>
 
@@ -408,6 +659,23 @@
 
   :global(.table tbody td) {
     font-size: 0.95rem;
+  }
+
+  /* Estilos para el modal */
+  :global(.modal-card-head) {
+    background-color: var(--color-primario);
+    border-bottom: 2px solid var(--color-secundario);
+  }
+
+  :global(.modal-card-title) {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+
+  :global(.modal-card-foot) {
+    border-top: 1px solid #e0e0e0;
+    background-color: #f5f5f5;
   }
 
   @media screen and (max-width: 768px) {
