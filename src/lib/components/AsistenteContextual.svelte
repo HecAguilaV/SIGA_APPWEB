@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { page } from '$app/stores';
   import { derived } from 'svelte/store';
   import { onMount } from 'svelte';
@@ -21,21 +21,15 @@
   let panelHeight = 550;
   let resizeOffsetX = 0;
   let resizeOffsetY = 0;
-  /** @type {HTMLButtonElement | undefined} */
-  let botonToggle;
-  /** @type {HTMLDivElement | undefined} */
-  let panelElement;
-  /** @type {HTMLDivElement | undefined} */
-  let mensajesContainer;
-  /** @type {HTMLInputElement | undefined} */
-  let inputMensaje;
+  let botonToggle: HTMLButtonElement | undefined;
+  let panelElement: HTMLDivElement | undefined;
+  let mensajesContainer: HTMLDivElement | undefined;
+  let inputMensaje: HTMLInputElement | undefined;
   let estamosUsandoVoz = false;
-  /** @type {any} */
-  let reconocimiento;
+  let reconocimiento: any;
 
   /** @typedef {{ id: string; emisor: 'usuario' | 'siga'; tipo: 'texto' | 'grafico'; contenido?: string; grafico?: { tipo: 'torta' | 'barras' | 'lineas'; titulo: string; etiquetas: string[]; valores: number[] } }} Mensaje */
-  /** @type {Mensaje[]} */
-  let mensajes = [];
+  let mensajes: any[] = [];
 
   const rutaActual = derived(page, ($page) => $page.url.pathname);
 
@@ -83,7 +77,7 @@
    * Procesa comandos CRUD enviados por el asistente
    * @param {any} crud
    */
-  const procesarCRUD = async (crud) => {
+  const procesarCRUD = async (crud: any) => {
     try {
       if (crud.accion === 'crear_producto') {
         const res = await fetch('/api/productos/crear', {
@@ -243,9 +237,9 @@
   };
 
   /**
-   * @param {SubmitEvent} evento
+   * @param {SubmitEvent | KeyboardEvent} evento
    */
-  const manejarEnvio = async (evento) => {
+  const manejarEnvio = async (evento: SubmitEvent | KeyboardEvent) => {
     evento.preventDefault();
     await enviarMensaje();
   };
@@ -253,7 +247,7 @@
   /**
    * @param {MouseEvent} evento
    */
-  const iniciarArrastre = (evento) => {
+  const iniciarArrastre = (evento: MouseEvent) => {
     if (evento.button !== 0) return; // Solo click izquierdo
     estaArrastrando = true;
     if (!panelElement) return;
@@ -267,7 +261,7 @@
   /**
    * @param {MouseEvent} evento
    */
-  const manejarMovimiento = (evento) => {
+  const manejarMovimiento = (evento: MouseEvent) => {
     if (!estaArrastrando || !panelElement) return;
 
     const nuevaX = evento.clientX - offsetX;
@@ -284,13 +278,13 @@
     estaArrastrando = false;
   };
 
-  const iniciarResize = (evento) => {
+  const iniciarResize = (evento: MouseEvent) => {
     if (evento.button !== 0) return;
     estaRedimensionando = true;
     resizeOffsetY = evento.clientY;
   };
 
-  const manejarResize = (evento) => {
+  const manejarResize = (evento: MouseEvent) => {
     if (!estaRedimensionando) return;
     
     const deltaY = evento.clientY - resizeOffsetY;
@@ -434,7 +428,7 @@
     >
       <div class="resize-handle-top" on:mousedown={iniciarResize} role="button" tabindex="0" title="Arrastra para agrandar/achicar"></div>
       
-      <div class="panel-header" on:mousedown={iniciarArrastre} role="application">
+      <div class="panel-header" on:mousedown={iniciarArrastre} role="button" tabindex="0">
         <h3>🤖 SIGA Asistente</h3>
         <button
           type="button"

@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
   import { onMount } from 'svelte';
 
   let swaggerReady = false;
-  let error = null;
+  let error: string | null = null;
 
   onMount(async () => {
     // Cargar CSS primero
@@ -23,16 +23,16 @@
       script2.onload = () => {
         try {
           // Inicializar Swagger UI
-          const ui = window.SwaggerUIBundle({
+          const ui = (window as any).SwaggerUIBundle({
             url: '/api/openapi',
             dom_id: '#swagger-ui',
             deepLinking: true,
             presets: [
-              window.SwaggerUIBundle.presets.apis,
-              window.SwaggerUIStandalonePreset
+              (window as any).SwaggerUIBundle.presets.apis,
+              (window as any).SwaggerUIStandalonePreset
             ],
             plugins: [
-              window.SwaggerUIBundle.plugins.DownloadUrl
+              (window as any).SwaggerUIBundle.plugins.DownloadUrl
             ],
             layout: 'StandaloneLayout',
             onComplete: () => {
@@ -40,9 +40,10 @@
             }
           });
           
-          window.ui = ui;
-        } catch (err) {
-          error = `Error inicializando Swagger: ${err.message}`;
+          (window as any).ui = ui;
+        } catch (err: unknown) {
+          const errorMsg = err instanceof Error ? err.message : String(err);
+          error = `Error inicializando Swagger: ${errorMsg}`;
           console.error(error, err);
         }
       };
