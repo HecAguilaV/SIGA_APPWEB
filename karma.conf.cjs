@@ -15,16 +15,19 @@ module.exports = function(config) {
     preprocessors: {
       'src/tests/**/*.spec.js': ['babel']
     },
-    reporters: ['progress'],
+    reporters: ['kjhtml'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    autoWatch: true,
+    autoWatch: false,
     browsers: ['ChromeHeadless'],
     singleRun: true,
     restartOnFileChange: false,
     client: {
-      clearContext: false
+      clearContext: false,
+      jasmine: {
+        random: false
+      }
     }
   });
 };
