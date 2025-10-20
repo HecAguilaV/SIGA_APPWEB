@@ -17,17 +17,16 @@ export const POST = async ({ request }) => {
     const skuFinal = sku || `SKU-${Date.now()}`;
     
     // Crear producto con stock 0 en todos los locales
-    /** @type {Record<string, number>} */
-    const stock = {};
+    const stock = /** @type {{ 1: number; 2: number; 3: number; }} */ ({});
     datosGlobales.locales.forEach((local) => {
-      stock[String(local.id)] = 0;
+      stock[/** @type {1|2|3} */ (local.id)] = 0;
     });
 
     const nuevoProducto = {
       id: Math.max(...datosGlobales.productos.map((p) => p.id), 0) + 1,
-      nombre,
-      sku: skuFinal,
-      categoria,
+      nombre: nombre.trim(),
+      sku: skuFinal.trim().toUpperCase(),
+      categoria: categoria.trim(),
       activo: true,
       stock
     };
