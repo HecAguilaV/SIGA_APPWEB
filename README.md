@@ -34,51 +34,67 @@ MVP interactivo y profesional para SIGA, construido con **SvelteKit 5**, **Gemin
 | **Estado** | Svelte stores + shared state |
 | **Despliegue** | Vercel Serverless Functions |
 
-## 🚀 Puesta en marcha local
+## 🚀 Puesta en marcha rápida
 
-### Opción 1: Usando SIGA.bat (RECOMENDADO - Windows)
+### ⚡ OPCIÓN 1: Usar SIGA.bat (RECOMENDADO - Windows)
+
 ```bash
 Doble-click en: SIGA.bat
-Luego elige:
-  1. Ejecutar Tests
-  2. Iniciar Servidor Local
-  3. Build para Producción
-  4. Instalar Dependencias
 ```
 
-### Opción 2: Comandos manuales
-```bash
-# Instalar dependencias
-npm install
+Menú interactivo:
+- **1** → Ejecutar Tests (35+ tests Jasmine + Karma)
+- **2** → Dev Server (`http://localhost:5173`)
+- **3** → Build Producción
+- **4** → Instalar Dependencias
 
-# Crear archivo .env.local en la raíz
+---
+
+### 📋 OPCIÓN 2: Comandos manuales
+
+```bash
+# Setup inicial
+npm install
 echo "VITE_GEMINI_API_KEY=AIzaSyAcxjnWp0d3yy7ev-Iup1RQogCqOLu4qzY" > .env.local
 echo "GEMINI_API_KEY=AIzaSyAcxjnWp0d3yy7ev-Iup1RQogCqOLu4qzY" >> .env.local
 
-# Iniciar servidor de desarrollo
-npm run dev
+# Iniciar
+npm run dev                 # http://localhost:5173
 
-# Ejecutar tests
-npm run test:ci
+# Tests
+npm run test:ci            # Ejecuta 35+ tests
+
+# Producción
+npm run build              # Compila para Vercel
 ```
 
-Acceder en: `http://localhost:5173`
+---
 
 ## 📁 Estructura del proyecto
 
+👉 **Ver `ESTRUCTURA.md` para detalles completos**
+
 ```
 SIGA_PROTOTIPO/
-├── src/
-│   ├── routes/
-│   │   ├── +page.svelte              # Inventario (tabla reactiva)
-│   │   ├── analisis/+page.svelte     # Análisis con gráficos
-│   │   └── api/
-│   │       ├── chat/+server.js       # IA con RAG context
-│   │       ├── productos/crear/+server.js
-│   │       └── inventario/actualizar/+server.js
-│   ├── lib/
-│   │   ├── components/AsistenteContextual.svelte
-│   │   ├── estado-compartido.js      # Estado centralizado
+├── 📄 SIGA.bat                 ← PUNTO DE ENTRADA (menú)
+├── 📄 build.bat                ← Build producción
+├── 📄 ESTRUCTURA.md            ← Guía de carpetas (LEER ESTO)
+├── 📄 TESTING_SIMPLE.md        ← Guía de tests
+│
+├── 🧪 src/tests/               ← 35+ Tests
+│   ├── unit/                   (inventario, validaciones, cálculos)
+│   └── integration/            (CRUD, flujos completos)
+│
+├── 🎨 src/routes/              ← Páginas y Endpoints
+│   ├── +page.svelte            (Inventario - tabla principal)
+│   ├── api-docs/               (Swagger - documentación API)
+│   └── api/                    (Endpoints: /productos/crear, /inventario/actualizar)
+│
+└── 🧠 src/lib/                 ← Lógica compartida
+    ├── estado-compartido.js    (Estado global)
+    ├── components/             (Componentes reutilizables)
+    └── stores/                 (Svelte stores)
+```
 │   │   └── datosSimulados.js
 │   └── app.css
 ├── .env.local
