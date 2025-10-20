@@ -36,6 +36,17 @@ MVP interactivo y profesional para SIGA, construido con **SvelteKit 5**, **Gemin
 
 ## 🚀 Puesta en marcha local
 
+### Opción 1: Usando SIGA.bat (RECOMENDADO - Windows)
+```bash
+Doble-click en: SIGA.bat
+Luego elige:
+  1. Ejecutar Tests
+  2. Iniciar Servidor Local
+  3. Build para Producción
+  4. Instalar Dependencias
+```
+
+### Opción 2: Comandos manuales
 ```bash
 # Instalar dependencias
 npm install
@@ -46,6 +57,9 @@ echo "GEMINI_API_KEY=AIzaSyAcxjnWp0d3yy7ev-Iup1RQogCqOLu4qzY" >> .env.local
 
 # Iniciar servidor de desarrollo
 npm run dev
+
+# Ejecutar tests
+npm run test:ci
 ```
 
 Acceder en: `http://localhost:5173`
@@ -127,32 +141,41 @@ git push origin main
 - Probar: escribir "crear producto test" en el asistente
 - Verificar que tabla se actualiza
 
-## 🧪 Testing (Opcional - Desarrollo)
+## 🧪 Testing
 
-Tests con **Jasmine** y **Karma** para validar lógica:
+Tests con **Jasmine** y **Karma** para validar lógica (35+ tests):
 
 ```bash
-# Instalar dependencias (solo primera vez)
-npm install
+# Opción 1: Usando SIGA.bat (Windows)
+SIGA.bat → Opción 1
 
-# Ejecutar tests una sola vez
-npm test
-
-# Modo watch (auto-ejecuta al guardar)
-npm run test:watch
-
-# Tests en CI/CD (Chrome headless)
+# Opción 2: Comando manual
 npm run test:ci
 ```
 
-**📚 Documentación de testing:**
-- `TESTING.md` - Guía técnica de Karma/Jasmine
-- `GUIA_TESTING_JUNIOR.md` - Comparativa Jasmine vs JUnit vs Postman
-- `src/tests/example.spec.js` - Ejemplos básicos
+**📚 Documentación:**
+- `TESTING_SIMPLE.md` - Guía rápida (1 tipo de test)
+- `src/tests/unit/` - Tests unitarios (inventario, validaciones, cálculos)
+- `src/tests/integration/` - Tests de flujos completos (CRUD)
 
-**⚠️ Nota:** Tests son **opcionales** y no afectan el build de Vercel (`npm run build`). Úsalos para validar tu código durante desarrollo.
+**✅ Resultado esperado:** `TOTAL: 35+ SUCCESS`
 
-## 🔄 Swagger API Documentation
+## 📖 Swagger API Documentation
+
+Documentación interactiva de endpoints:
+
+```bash
+# Opción 1: Usando SIGA.bat
+SIGA.bat → Opción 2 → http://localhost:5173/api-docs
+
+# Opción 2: Comando manual
+npm run dev → http://localhost:5173/api-docs
+```
+
+**Endpoints disponibles:**
+- `POST /api/productos/crear` - Crear producto
+- `PUT /api/inventario/actualizar` - Actualizar stock
+- `GET /api/openapi` - Especificación OpenAPI
 
 Ver documentación interactiva de APIs:
 

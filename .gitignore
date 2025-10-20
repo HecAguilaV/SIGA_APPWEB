@@ -10,3 +10,12 @@ build/
 # Sistema
 .DS_Store
 Thumbs.db
+
+# Scripts obsoletos (usar SIGA.bat)
+run-dev.bat
+run-tests.bat
+test-watch.bat
+npm-test.bat
+run-dev-simple.bat
+install-deps.bat
+karma.conf.js

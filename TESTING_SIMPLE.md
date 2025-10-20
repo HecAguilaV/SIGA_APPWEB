@@ -2,11 +2,11 @@
 
 ## 📋 Resumen
 
-Hay **2 tipos de tests** principales:
+Hay **1 tipo de test real** + **1 documentación interactiva**:
 
-### 1️⃣ **Test: Jasmine & Karma** ✅
+### 1️⃣ **TEST REAL: Jasmine & Karma** ✅
 **¿Qué prueba?** Lógica de negocio (inventario, CRUD, validaciones)
-**¿Cuántos?** ~35 tests
+**¿Cuántos?** ~35 tests unitarios + integración
 **¿Cómo ejecutar?**
 ```bash
 npm run test:ci
@@ -19,14 +19,19 @@ npm run test:ci
 
 ---
 
-### 2️⃣ **Test: Swagger API Docs** 📖
-**¿Qué prueba?** Documentación de endpoints (crear producto, actualizar stock, etc.)
+### 2️⃣ **NO ES TEST: Swagger API Docs** 📖
+**¿Qué es?** Documentación interactiva (no es un test)
 **¿Dónde?** `http://localhost:5173/api-docs`
 **¿Cómo acceder?**
 ```bash
 npm run dev
 ```
 Luego abre navegador en: `http://localhost:5173/api-docs`
+
+**Para qué sirve:**
+- Ver todos los endpoints disponibles
+- Probar endpoints directamente desde el navegador
+- Documentación automática de APIs
 
 **Endpoints documentados:**
 - `POST /api/productos/crear` - Crear nuevo producto
@@ -68,10 +73,10 @@ it('[UNIT] [CREATE] Producto debe tener nombre y SKU', () => {
 ## ✅ Checklist para Dev Trainer
 
 - [ ] ¿Tests pasando? → `npm run test:ci` debe mostrar "TOTAL: SUCCESS"
-- [ ] ¿Swagger funciona? → Abre `/api-docs` en el navegador
+- [ ] ¿Swagger funciona? → Abre `/api-docs` en el navegador (es solo documentación, no test)
 - [ ] ¿Cada test es claro? → Nombres con prefijos descriptivos
 - [ ] ¿Entiendes cada test? → Lean, enfocados, fáciles de mantener
 
 ---
 
-**Fin. Dos tipos de tests. Limpio. Defendi­ble.** 🎯
+**Fin. Un tipo de test. Documentación clara. Defendible.** 🎯
