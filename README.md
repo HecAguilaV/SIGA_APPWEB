@@ -159,7 +159,7 @@ git push origin main
 
 ## 🧪 Testing
 
-Tests con **Jasmine** y **Karma** para validar lógica (35+ tests):
+Tests con **Jasmine** y **Karma** para validar lógica (10/10 tests):
 
 ```bash
 # Opción 1: Usando SIGA.bat (Windows)
@@ -169,12 +169,12 @@ SIGA.bat → Opción 1
 npm run test:ci
 ```
 
-**📚 Documentación:**
-- `TESTING_SIMPLE.md` - Guía rápida (1 tipo de test)
-- `src/tests/unit/` - Tests unitarios (inventario, validaciones, cálculos)
-- `src/tests/integration/` - Tests de flujos completos (CRUD)
+**� Reportes de Testing:**
+- **[TEST_REPORT.md](./TEST_REPORT.md)** - Reporte detallado en Markdown (✅ 10/10 EXITOSOS)
+- **[TEST_REPORT.html](./TEST_REPORT.html)** - Reporte visual interactivo (abrir en navegador)
+- **[COBERTURA_TESTING.md](./COBERTURA_TESTING.md)** - Cobertura de tests
 
-**✅ Resultado esperado:** `TOTAL: 35+ SUCCESS`
+**✅ Resultado esperado:** `TOTAL: 10 SUCCESS`
 
 ## 📖 Swagger API Documentation
 
