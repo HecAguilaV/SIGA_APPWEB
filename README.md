@@ -1,6 +1,6 @@
-# SIGA - Sistema Inteligente de Gestión de Almacenes
+# SIGA - Sistema Inteligente de Gestión de Activos
 
-MVP interactivo y profesional para SIGA, construido con **SvelteKit 5**, **Gemini 2.5 Pro**, **Bulma CSS** y **Chart.js**. Incluye gestión de inventario en tiempo real, IA conversacional con voz, y operaciones CRUD automáticas.
+MVP interactivo para SIGA, construido con **SvelteKit 5**, **Gemini 2.5 Pro**, **Bulma CSS** y **Chart.js**. Incluye gestión de inventario en tiempo real, IA conversacional con voz, y operaciones CRUD automáticas.
 
 ## ✨ Características principales
 
@@ -36,69 +36,58 @@ MVP interactivo y profesional para SIGA, construido con **SvelteKit 5**, **Gemin
 
 ## 🚀 Puesta en marcha rápida
 
-### ⚡ OPCIÓN 1: Usar SIGA.bat (RECOMENDADO - Windows)
-
-```bash
-Doble-click en: SIGA.bat
-```
-
-Menú interactivo:
-- **1** → Ejecutar Tests (35+ tests Jasmine + Karma)
-- **2** → Dev Server (`http://localhost:5173`)
-- **3** → Build Producción
-- **4** → Instalar Dependencias
-
----
-
-### 📋 OPCIÓN 2: Comandos manuales
+### ⚡ Comandos principales
 
 ```bash
 # Setup inicial
 npm install
-echo "VITE_GEMINI_API_KEY=AIzaSyAcxjnWp0d3yy7ev-Iup1RQogCqOLu4qzY" > .env.local
-echo "GEMINI_API_KEY=AIzaSyAcxjnWp0d3yy7ev-Iup1RQogCqOLu4qzY" >> .env.local
 
-# Iniciar
+# Iniciar servidor de desarrollo
 npm run dev                 # http://localhost:5173
 
-# Tests
-npm run test:ci            # Ejecuta 35+ tests
+# Ejecutar tests
+npm test                    # Jasmine + Karma (10/10 tests)
 
-# Producción
-npm run build              # Compila para Vercel
+# Compilar para producción
+npm run build
 ```
+
+---
+
+### 📋 Todos los comandos disponibles
+
+| Comando | Descripción |
+|---------|------------|
+| `npm run dev` | Servidor desarrollo en localhost:5173 |
+| `npm test` | Ejecuta tests UNA VEZ (10 tests) |
+| `npm run test:watch` | Ejecuta tests en modo watch continuo |
+| `npm run build` | Compila para producción |
+| `npm run preview` | Vista previa del build compilado |
+| `npm run check` | Verifica tipos TypeScript |
 
 ---
 
 ## 📁 Estructura del proyecto
 
-👉 **Ver `ESTRUCTURA.md` para detalles completos**
-
 ```
 SIGA_PROTOTIPO/
-├── 📄 SIGA.bat                 ← PUNTO DE ENTRADA (menú)
-├── 📄 build.bat                ← Build producción
-├── 📄 ESTRUCTURA.md            ← Guía de carpetas (LEER ESTO)
-├── 📄 TESTING_SIMPLE.md        ← Guía de tests
+├── 📄 package.json             ← Dependencias
+├── 📄 karma.conf.cjs           ← Configuración tests
+├── 📄 README.md                ← Este archivo
+├── 📄 ERS.md                   ← Especificación requisitos
+├── 📄 COBERTURA_TESTING.md     ← Cobertura tests
 │
-├── 🧪 src/tests/               ← 35+ Tests
-│   ├── unit/                   (inventario, validaciones, cálculos)
-│   └── integration/            (CRUD, flujos completos)
+├── 🧪 src/tests/               ← 10 Tests Jasmine
+│   ├── unit/                   (inventario, validaciones)
+│   └── integration/            (CRUD, asistente IA)
 │
 ├── 🎨 src/routes/              ← Páginas y Endpoints
 │   ├── +page.svelte            (Inventario - tabla principal)
-│   ├── api-docs/               (Swagger - documentación API)
-│   └── api/                    (Endpoints: /productos/crear, /inventario/actualizar)
+│   └── api/                    (Endpoints CRUD)
 │
 └── 🧠 src/lib/                 ← Lógica compartida
-    ├── estado-compartido.js    (Estado global)
     ├── components/             (Componentes reutilizables)
     └── stores/                 (Svelte stores)
-```
-│   │   └── datosSimulados.js
-│   └── app.css
-├── .env.local
-└── README.md
 ```
 
 ## 🤖 Cómo funciona la IA
@@ -162,49 +151,17 @@ git push origin main
 Tests con **Jasmine** y **Karma** para validar lógica (10/10 tests):
 
 ```bash
-# Opción 1: Usando SIGA.bat (Windows)
-SIGA.bat → Opción 1
+# Ejecutar tests UNA VEZ
+npm test
 
-# Opción 2: Comando manual
-npm run test:ci
+# Ejecutar tests en modo watch (se ejecutan con cada cambio)
+npm run test:watch
 ```
-
-**� Reportes de Testing:**
-- **[TEST_REPORT.md](./TEST_REPORT.md)** - Reporte detallado en Markdown (✅ 10/10 EXITOSOS)
-- **[TEST_REPORT.html](./TEST_REPORT.html)** - Reporte visual interactivo (abrir en navegador)
-- **[COBERTURA_TESTING.md](./COBERTURA_TESTING.md)** - Cobertura de tests
 
 **✅ Resultado esperado:** `TOTAL: 10 SUCCESS`
 
-## 📖 Swagger API Documentation
-
-Documentación interactiva de endpoints:
-
-```bash
-# Opción 1: Usando SIGA.bat
-SIGA.bat → Opción 2 → http://localhost:5173/api-docs
-
-# Opción 2: Comando manual
-npm run dev → http://localhost:5173/api-docs
-```
-
-**Endpoints disponibles:**
-- `POST /api/productos/crear` - Crear producto
-- `PUT /api/inventario/actualizar` - Actualizar stock
-- `GET /api/openapi` - Especificación OpenAPI
-
-Ver documentación interactiva de APIs:
-
-```bash
-npm run dev
-# Abrir en navegador: http://localhost:5173/api-docs
-```
-
-Swagger UI muestra todos los endpoints, parámetros y permite probar directamente.
-
-**📚 Documentación:**
-- `SWAGGER.md` - Guía de uso de Swagger UI
-- OpenAPI spec: `/api/swagger.json`
+**📚 Documentación de tests:**
+- **[COBERTURA_TESTING.md](./COBERTURA_TESTING.md)** - Cobertura completa de tests
 
 ## 🎯 Roadmap futuro
 
