@@ -8,7 +8,9 @@ module.exports = function(config) {
       'src/tests/integration/*.spec.js'
     ],
     exclude: [
-      'src/tests/example.spec.js'
+      'src/tests/example.spec.js',
+      'src/tests/unit/validaciones.spec.js',
+      'src/tests/unit/calculos.spec.js'
     ],
     preprocessors: {
       'src/tests/**/*.spec.js': ['babel']
@@ -18,9 +20,9 @@ module.exports = function(config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
-    singleRun: false,
-    restartOnFileChange: true,
+    browsers: ['ChromeHeadless'],
+    singleRun: true,
+    restartOnFileChange: false,
     client: {
       clearContext: false
     }

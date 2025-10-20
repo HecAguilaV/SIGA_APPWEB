@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
 
   let swaggerReady = false;
+  let error = null;
 
   onMount(async () => {
     // Cargar CSS primero
@@ -20,31 +21,52 @@
       script2.src = 'https://cdn.jsdelivr.net/npm/swagger-ui-dist@4/swagger-ui-standalone-preset.js';
       
       script2.onload = () => {
-        // Inicializar Swagger UI
-        const ui = window.SwaggerUIBundle({
-          url: '/api/openapi',
-          dom_id: '#swagger-ui',
-          deepLinking: true,
-          presets: [
-            window.SwaggerUIBundle.presets.apis,
-            window.SwaggerUIStandalonePreset
-          ],
-          plugins: [
-            window.SwaggerUIBundle.plugins.DownloadUrl
-          ],
-          layout: 'StandaloneLayout'
-        });
-        
-        window.ui = ui;
-        swaggerReady = true;
+        try {
+          // Inicializar Swagger UI
+          const ui = window.SwaggerUIBundle({
+            url: '/api/openapi',
+            dom_id: '#swagger-ui',
+            deepLinking: true,
+            presets: [
+              window.SwaggerUIBundle.presets.apis,
+              window.SwaggerUIStandalonePreset
+            ],
+            plugins: [
+              window.SwaggerUIBundle.plugins.DownloadUrl
+            ],
+            layout: 'StandaloneLayout',
+            onComplete: () => {
+              swaggerReady = true;
+            }
+          });
+          
+          window.ui = ui;
+        } catch (err) {
+          error = `Error inicializando Swagger: ${err.message}`;
+          console.error(error, err);
+        }
+      };
+
+      script2.onerror = () => {
+        error = 'Error cargando Swagger UI Standalone Preset';
       };
       document.head.appendChild(script2);
+    };
+
+    script1.onerror = () => {
+      error = 'Error cargando Swagger UI Bundle';
     };
     document.head.appendChild(script1);
   });
 </script>
 
 <div id="swagger-ui" style="min-height: 100vh;"></div>
+
+{#if error}
+  <div style="padding: 20px; background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; border-radius: 4px; margin: 20px;">
+    <strong>Error:</strong> {error}
+  </div>
+{/if}
 
 <style>
   :global(body) {
