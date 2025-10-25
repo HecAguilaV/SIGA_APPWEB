@@ -8,7 +8,11 @@
       <div class="column">
         <span class="etiqueta">Nuestra Filosofía</span>
         <h1 class="title heading-gradient">Que el emprendedor nunca se detenga</h1>
-        <p class="subtitle mt-4">SIGA es tu futuro ERP con simplicidad a prueba de todo. Nació de una experiencia real: la parálisis operativa que viven las PYMES atrapadas en sistemas complejos y planillas caóticas.</p>
+        <p class="subtitle mt-4">
+          <span style="color: #1a2233; letter-spacing: 0.01em; font-size: 1rem;">
+            SIGA es tu futuro ERP con simplicidad a prueba de todo. Nació de una experiencia real: la parálisis operativa que viven las PYMES atrapadas en sistemas complejos y planillas caóticas.
+          </span>
+        </p>
       </div>
       <div class="column is-narrow has-text-centered">
         <img src="/brand/Logo_SIGA.png" alt="Logo de SIGA" class="hero-logo" />
@@ -21,11 +25,13 @@
     <div class="column is-full">
       <div class="box value-proposition">
         <h2 class="title is-4 heading-gradient mb-4">Propuesta de Valor</h2>
-        <p class="subtitle is-5 has-text-weight-bold" style="color: #1a2233; margin-bottom: 1.5rem; letter-spacing: 0.01em;">
+        <p class="subtitle is-5 has-text-weight-bold" style="color: #1a2233; margin-bottom: 1.2rem; letter-spacing: 0.01em;">
           <Target size={24} weight="duotone" class="icon-inline" /> No gestiones tu inventario, gestiona tu tiempo
         </p>
-        <p class="is-size-6">
-          Para las PYMES, la gestión de inventario no es un trámite, es una parálisis operativa. El emprendedor que cumple múltiples roles vive detenido por tareas manuales, quiebres de stock impredecibles y mermas silenciosas que consumen su capital más valioso: el tiempo.
+        <p class="subtitle mt-4 is6 has-text-bold">
+          <span style="color: #1a2233; letter-spacing: 0.01em; font-size: 1rem;">
+            Para las PYMES, la gestión de inventario no es un trámite, es una parálisis operativa. El emprendedor que cumple múltiples roles vive detenido por tareas manuales, quiebres de stock impredecibles y mermas silenciosas que consumen su capital más valioso: el tiempo.
+          </span>
         </p>
       </div>
     </div>
