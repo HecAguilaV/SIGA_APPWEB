@@ -6,8 +6,7 @@ node_modules/
 build/
 
 # Entornos
-.env
-.env.*
+
 
 # Sistema
 .DS_Store
