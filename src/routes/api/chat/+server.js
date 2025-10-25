@@ -60,7 +60,7 @@ Pregunta del usuario: ${preguntaUsuario}`;
  */
 const invocarGemini = async (prompt, apiKey, fetchFn) => {
   const respuesta = await fetchFn(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=${apiKey}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
     {
       method: 'POST',
       headers: {
