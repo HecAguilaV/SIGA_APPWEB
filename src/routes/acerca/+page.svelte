@@ -1,5 +1,5 @@
 <script>
-  // Sin scripts necesarios - página estática de información
+  import { Target, Chats, Lightning, MouseSimple, TrendDown, CurrencyCircleDollar, Clock, Link } from 'phosphor-svelte';
 </script>
 
 <section class="section">
@@ -22,7 +22,7 @@
       <div class="box value-proposition">
         <h2 class="title is-4 heading-gradient mb-4">Propuesta de Valor</h2>
         <p class="subtitle is-5 has-text-weight-semibold" style="color: var(--color-primario); margin-bottom: 1.5rem;">
-          🎯 No gestiones tu inventario, gestiona tu tiempo
+          <Target size={24} weight="duotone" class="icon-inline" /> No gestiones tu inventario, gestiona tu tiempo
         </p>
         <p class="is-size-6">
           Para las PYMES, la gestión de inventario no es un trámite, es una parálisis operativa. El emprendedor que cumple múltiples roles vive detenido por tareas manuales, quiebres de stock impredecibles y mermas silenciosas que consumen su capital más valioso: el tiempo.
@@ -39,7 +39,9 @@
 
     <div class="column is-full-mobile is-half-tablet is-one-third-desktop">
       <div class="pilar-card">
-        <div class="pilar-icon">💬</div>
+        <div class="pilar-icon">
+          <Chats size={48} weight="fill" color="var(--color-primario)" />
+        </div>
         <h3 class="title is-5">Asistente Conversacional</h3>
         <p>Actualiza inventario, consulta stock y genera reportes en lenguaje natural desde cualquier dispositivo. Tareas que toman minutos, ahora en segundos.</p>
       </div>
@@ -47,7 +49,9 @@
 
     <div class="column is-full-mobile is-half-tablet is-one-third-desktop">
       <div class="pilar-card">
-        <div class="pilar-icon">🧠</div>
+        <div class="pilar-icon">
+          <Lightning size={48} weight="fill" color="var(--color-primario)" />
+        </div>
         <h3 class="title is-5">Inteligencia Proactiva con IA</h3>
         <p>Modelos de lenguaje conectados a tus datos en tiempo real. Anticipamos quiebres de stock, sugerimos compras y alertamos sobre anomalías.</p>
       </div>
@@ -55,7 +59,9 @@
 
     <div class="column is-full-mobile is-half-tablet is-one-third-desktop">
       <div class="pilar-card">
-        <div class="pilar-icon">✨</div>
+        <div class="pilar-icon">
+          <MouseSimple size={48} weight="fill" color="var(--color-primario)" />
+        </div>
         <h3 class="title is-5">Simplicidad Radical</h3>
         <p>Interfaz limpia donde la IA no solo genera reportes, sino que los explica en texto simple. Insights accionables, no datos abrumadores.</p>
       </div>
@@ -70,7 +76,7 @@
         <div class="columns is-multiline">
           <div class="column is-full-mobile is-half-desktop">
             <div class="problem-item">
-              <span class="problem-icon">📉</span>
+              <span class="problem-icon"><TrendDown size={32} weight="fill" color="var(--color-alerta)" /></span>
               <div>
                 <h4 class="has-text-weight-semibold">Quiebres de Stock</h4>
                 <p class="is-size-7">Ventas perdidas por falta de predicción. SIGA anticipa la demanda.</p>
@@ -79,7 +85,7 @@
           </div>
           <div class="column is-full-mobile is-half-desktop">
             <div class="problem-item">
-              <span class="problem-icon">💸</span>
+              <span class="problem-icon"><CurrencyCircleDollar size={32} weight="fill" color="var(--color-alerta)" /></span>
               <div>
                 <h4 class="has-text-weight-semibold">Mermas y Desperdicio</h4>
                 <p class="is-size-7">Capital dormido en productos olvidados. Detectamos anomalías al instante.</p>
@@ -88,7 +94,7 @@
           </div>
           <div class="column is-full-mobile is-half-desktop">
             <div class="problem-item">
-              <span class="problem-icon">⏱️</span>
+              <span class="problem-icon"><Clock size={32} weight="fill" color="var(--color-alerta)" /></span>
               <div>
                 <h4 class="has-text-weight-semibold">Pérdida de Tiempo</h4>
                 <p class="is-size-7">Horas en planillas manuales. SIGA automatiza todo en segundos.</p>
@@ -97,7 +103,7 @@
           </div>
           <div class="column is-full-mobile is-half-desktop">
             <div class="problem-item">
-              <span class="problem-icon">🔗</span>
+              <span class="problem-icon"><Link size={32} weight="fill" color="var(--color-alerta)" /></span>
               <div>
                 <h4 class="has-text-weight-semibold">ERPs Complejos</h4>
                 <p class="is-size-7">Sistemas costosos y difíciles. SIGA es simple, accesible y funciona.</p>

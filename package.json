@@ -35,6 +35,7 @@
   "type": "module",
   "dependencies": {
     "bulma": "^1.0.2",
-    "chart.js": "^4.4.6"
+    "chart.js": "^4.4.6",
+    "phosphor-svelte": "^3.0.1"
   }
 }

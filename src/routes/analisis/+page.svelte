@@ -3,6 +3,7 @@
   import GraficoLineas from '$lib/components/GraficoLineas.svelte';
   import GraficoLineasMultiple from '$lib/components/GraficoLineasMultiple.svelte';
   import { datosNegocio } from '$lib/datosSimulados.js';
+  import { TrendUp, Target, Lightbulb, Star } from 'phosphor-svelte';
 
   let localSeleccionado = 0;
 
@@ -93,7 +94,7 @@
     <div class="column is-half-tablet is-one-third-desktop">
       <div class="insight-card">
         <div class="insight-header">
-          <span class="insight-icon">⭐</span>
+          <span class="insight-icon"><Star size={32} weight="fill" color="var(--color-primario)" /></span>
           <h3 class="insight-title">Producto Estrella</h3>
         </div>
         <div class="insight-content">
@@ -107,7 +108,7 @@
     <div class="column is-half-tablet is-one-third-desktop">
       <div class="insight-card">
         <div class="insight-header">
-          <span class="insight-icon">📈</span>
+          <span class="insight-icon"><TrendUp size={32} weight="fill" color="var(--color-exito)" /></span>
           <h3 class="insight-title">Total Semanal</h3>
         </div>
         <div class="insight-content">
@@ -121,7 +122,7 @@
     <div class="column is-half-tablet is-one-third-desktop">
       <div class="insight-card">
         <div class="insight-header">
-          <span class="insight-icon">🎯</span>
+          <span class="insight-icon"><Target size={32} weight="fill" color="var(--color-primario)" /></span>
           <h3 class="insight-title">Recomendación</h3>
         </div>
         <div class="insight-content">
@@ -176,7 +177,7 @@
         valores={valores}
         nombreGrafico="ventas-producto-{localSeleccionado}"
       />
-      <p class="help mt-3">💡 Escribe al asistente: "explícame el gráfico ventas-producto-{localSeleccionado}"</p>
+      <p class="help mt-3"><Lightbulb size={20} weight="fill" color="var(--color-primario)" class="icon-inline" /> Escribe al asistente: "explícame el gráfico ventas-producto-{localSeleccionado}"</p>
     </div>
   </div>
 </section>
