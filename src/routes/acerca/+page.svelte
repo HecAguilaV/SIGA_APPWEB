@@ -21,7 +21,7 @@
     <div class="column is-full">
       <div class="box value-proposition">
         <h2 class="title is-4 heading-gradient mb-4">Propuesta de Valor</h2>
-        <p class="subtitle is-5 has-text-weight-semibold" style="color: var(--color-primario); margin-bottom: 1.5rem;">
+        <p class="subtitle is-5 has-text-weight-bold" style="color: #1a2233; margin-bottom: 1.5rem; letter-spacing: 0.01em;">
           <Target size={24} weight="duotone" class="icon-inline" /> No gestiones tu inventario, gestiona tu tiempo
         </p>
         <p class="is-size-6">
