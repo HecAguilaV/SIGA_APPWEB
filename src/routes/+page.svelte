@@ -1,6 +1,5 @@
 <script lang="ts">
   import { datosNegocio } from '$lib/datosSimulados.js';
-
   let localSeleccionado = 0;
   let ordenarPor = 'nombre';
   let ordenAscendente = true;
@@ -359,8 +358,9 @@
       {/each}
     </div>
 
+    <!-- Vista de tarjetas en móvil, tabla en escritorio -->
     <div class="table-wrapper">
-      <div class="table-container">
+      <div class="table-container is-hidden-mobile">
         <table class="table is-fullwidth is-striped is-hoverable">
           <thead>
             <tr>
@@ -467,7 +467,85 @@
           </tbody>
         </table>
       </div>
+      <!-- Tarjetas apiladas en móvil -->
+      <div class="cards-inventario is-hidden-tablet">
+        {#each productosOrdenados as producto}
+          <div class="card-inventario {producto.stockActual === 0 ? 'critico' : producto.stockActual < 5 ? 'advertencia' : ''}">
+            <div class="card-inv-header">
+              <strong>{producto.nombre}</strong>
+              <span class="card-inv-stock {producto.stockActual === 0 ? 'status-critico' : producto.stockActual < 5 ? 'status-advertencia' : 'status-normal'}">
+                {producto.stockActual === 0 ? 'SIN STOCK' : producto.stockActual}
+              </span>
+            </div>
+            <div class="card-inv-meta">
+              <span class="card-inv-sku">SKU: {producto.sku}</span>
+              <span class="card-inv-cat">{producto.categoria}</span>
+            </div>
+            <div class="card-inv-actions">
+              <button class="button is-small is-info is-fullwidth mb-2" on:click={() => abrirEdicion(producto)}>
+                ✎ Editar
+              </button>
+              <button class="button is-small is-danger is-fullwidth" on:click={() => eliminarProducto(producto)}>
+                🗑 Eliminar
+              </button>
+            </div>
+          </div>
+        {/each}
+      </div>
     </div>
+<style>
+  .cards-inventario {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+  }
+  .card-inventario {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    padding: 1.2rem 1rem 1rem 1rem;
+    border-left: 5px solid var(--color-primario);
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .card-inventario.critico { border-left-color: #d32f2f; }
+  .card-inventario.advertencia { border-left-color: #f57c00; }
+  .card-inv-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1rem;
+      font-weight: 800;
+  }
+  .card-inv-stock {
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    background: #f6f9fc;
+  }
+  .card-inv-stock.status-critico { color: #d32f2f; background: #fdeaea; }
+  .card-inv-stock.status-advertencia { color: #f57c00; background: #fff3e0; }
+  .card-inv-stock.status-normal { color: var(--color-primario); background: #e3f2fd; }
+      text-shadow: 0 1px 0 #fff, 0 0px 1px #0001;
+  .card-inv-meta {
+    display: flex;
+    gap: 1.2rem;
+    font-size: 0.95rem;
+    color: #888;
+  }
+  .card-inv-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  @media (min-width: 769px) {
+    .cards-inventario { display: none; }
+  }
+</style>
 
     <!-- Modal de Edición de Producto -->
     {#if mostrarEdicion}
@@ -703,4 +781,15 @@
       font-size: 13px;
     }
   }
-</style>
+
+.card-inv-header strong {
+  color: #1f1e1e;
+  font-size: 1rem;
+  font-weight: 500;
+  background: none !important;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  word-break: break-word;
+  text-shadow: none !important;
+}
+  </style>
