@@ -19,6 +19,8 @@
   let lienzo;
   /** @type {import('chart.js').Chart | null} */
   let instanciaGrafico;
+  /** @type {Array<CanvasGradient | null>} */
+  let backgroundGradients = [];
 
   $: {
     // Inicializar locales visibles
@@ -63,24 +65,37 @@
       ? getComputedStyle(document.documentElement).getPropertyValue('--color-texto') || '#2c3e50'
       : '#2c3e50';
 
+    const canvas = /** @type {HTMLCanvasElement} */ (lienzo);
+    const ctx = canvas.getContext('2d');
+    backgroundGradients = [];
+
     const datasets = datosGrafico
       .filter((dataset) => localesVisibles.get(dataset.localId))
-      .map((dataset) => ({
-        label: dataset.nombre,
-        data: dataset.valores,
-        borderColor: dataset.color,
-        backgroundColor: hexToRgba(dataset.color, 0.1),
-        fill: true,
-        tension: 0.4,
-        pointRadius: 5,
-        pointBackgroundColor: dataset.color,
-        pointBorderColor: '#ffffff',
-        pointBorderWidth: 2,
-        pointHoverRadius: 7,
-        borderWidth: 2
-      }));
+      .map((dataset) => {
+        const gradient = ctx
+          ? ctx.createLinearGradient(0, 0, 0, canvas.height || 320)
+          : null;
+        if (gradient) {
+          gradient.addColorStop(0, hexToRgba(dataset.color, 0.25));
+          gradient.addColorStop(1, hexToRgba(dataset.color, 0.03));
+        }
+        backgroundGradients.push(gradient);
 
-    const canvas = /** @type {HTMLCanvasElement} */ (lienzo);
+        return {
+          label: dataset.nombre,
+          data: dataset.valores,
+          borderColor: dataset.color,
+          backgroundColor: gradient || hexToRgba(dataset.color, 0.1),
+          fill: true,
+          tension: 0.4,
+          pointRadius: 5,
+          pointBackgroundColor: dataset.color,
+          pointBorderColor: '#ffffff',
+          pointBorderWidth: 2,
+          pointHoverRadius: 7,
+          borderWidth: 2
+        };
+      });
 
     instanciaGrafico = new Chart(canvas, {
       type: 'line',
@@ -89,6 +104,10 @@
         datasets: datasets
       },
       options: {
+        animation: {
+          duration: 700,
+          easing: 'easeOutQuart'
+        },
         responsive: true,
         maintainAspectRatio: false,
         interaction: {
@@ -152,13 +171,60 @@
     localesVisibles = localesVisibles; // Trigger reactivity
     
     if (instanciaGrafico) {
+      const canvas = /** @type {HTMLCanvasElement} */ (lienzo);
+      const ctx = canvas.getContext('2d');
       const nuevosDatasets = datosGrafico
         .filter((dataset) => localesVisibles.get(dataset.localId))
-        .map((dataset) => ({
+        .map((dataset, idx) => {
+          const gradient = ctx
+            ? ctx.createLinearGradient(0, 0, 0, canvas.height || 320)
+            : null;
+          if (gradient) {
+            gradient.addColorStop(0, hexToRgba(dataset.color, 0.25));
+            gradient.addColorStop(1, hexToRgba(dataset.color, 0.03));
+          }
+
+          return {
+            label: dataset.nombre,
+            data: dataset.valores,
+            borderColor: dataset.color,
+            backgroundColor: gradient || hexToRgba(dataset.color, 0.1),
+            fill: true,
+            tension: 0.4,
+            pointRadius: 5,
+            pointBackgroundColor: dataset.color,
+            pointBorderColor: '#ffffff',
+            pointBorderWidth: 2,
+            pointHoverRadius: 7,
+            borderWidth: 2
+          };
+        });
+
+      instanciaGrafico.data.datasets = nuevosDatasets;
+      instanciaGrafico.update();
+    }
+  };
+
+  $: if (instanciaGrafico && datosGrafico.length) {
+    instanciaGrafico.data.labels = [...dias];
+    // actualizar datasets para respetar visibilidad y gradients
+    const canvas = /** @type {HTMLCanvasElement} */ (lienzo);
+    const ctx = canvas?.getContext('2d');
+    const nuevosDatasets = datosGrafico
+      .filter((dataset) => localesVisibles.get(dataset.localId))
+      .map((dataset) => {
+        const gradient = ctx
+          ? ctx.createLinearGradient(0, 0, 0, canvas.height || 320)
+          : null;
+        if (gradient) {
+          gradient.addColorStop(0, hexToRgba(dataset.color, 0.25));
+          gradient.addColorStop(1, hexToRgba(dataset.color, 0.03));
+        }
+        return {
           label: dataset.nombre,
           data: dataset.valores,
           borderColor: dataset.color,
-          backgroundColor: hexToRgba(dataset.color, 0.1),
+          backgroundColor: gradient || hexToRgba(dataset.color, 0.1),
           fill: true,
           tension: 0.4,
           pointRadius: 5,
@@ -167,15 +233,10 @@
           pointBorderWidth: 2,
           pointHoverRadius: 7,
           borderWidth: 2
-        }));
-      
-      instanciaGrafico.data.datasets = nuevosDatasets;
-      instanciaGrafico.update();
-    }
-  };
+        };
+      });
 
-  $: if (instanciaGrafico && datosGrafico.length) {
-    instanciaGrafico.data.labels = [...dias];
+    instanciaGrafico.data.datasets = nuevosDatasets;
     instanciaGrafico.update();
   }
 </script>

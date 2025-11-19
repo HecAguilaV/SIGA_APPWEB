@@ -187,5 +187,17 @@
     position: relative;
     width: 100%;
     min-height: 320px;
+    /* Glass soft effect */
+    background: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 18px;
+    border: 1.5px solid rgba(255, 255, 255, 0.22);
+    padding: 1.5rem;
+    transition: box-shadow 0.3s;
+  }
+  .contenedor-grafico:hover {
+    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.28);
   }
 </style>

@@ -21,7 +21,11 @@
       <strong>SIGA</strong> - Sistema Inteligente de Gestión de Activos
     </p>
     <p>
-      <small>© 2025 Todos los derechos reservados | Desarrollado por un soñador con poca RAM 🧑🏼‍💻</small>
+      <small>
+      © 2025 Todos los derechos reservados
+      <br />
+      Desarrollado por {'>'} Un Soñador con Poca RAM 👨🏻‍💻
+      </small>
     </p>
   </div>
 </footer>

@@ -8,6 +8,10 @@
   let mensajes = [];
   let estaPensando = false;
   let mensajeError = '';
+  /** @type {any} */
+  let graficoActivo = null;
+  /** @type {boolean} */
+  let graficoAbierto = false;
 
   $: mermas = $datosNegocio.mermasMes ?? [];
 
@@ -56,9 +60,14 @@
       const textoIA = datos.respuesta ?? '';
 
       if (typeof textoIA === 'string' && textoIA.includes('[GRAFICO_MERMAS]')) {
+        // Generar datos de mermas y abrir modal en vez de insertar inline
+        const datos = obtenerDatosMermas();
+        graficoActivo = { tipo: 'torta', titulo: 'Mermas mensuales por categoría', etiquetas: datos.etiquetas, valores: datos.valores };
+        graficoAbierto = true;
+        const resumen = `He generado un gráfico de mermas por categoría.`;
         mensajes = [
           ...mensajes,
-          { id: crypto.randomUUID(), emisor: 'siga', tipo: 'grafico-mermas' }
+          { id: crypto.randomUUID(), emisor: 'siga', tipo: 'texto', contenido: resumen }
         ];
       } else {
         mensajes = [
@@ -99,12 +108,8 @@
             </div>
           {:else if mensaje.tipo === 'grafico-mermas'}
             <div class="mensaje es-siga">
-              <p class="mb-3">Aquí tienes el panorama de mermas por categoría:</p>
-              <GraficoTorta
-                titulo="Mermas mensuales por categoría"
-                etiquetas={obtenerDatosMermas().etiquetas}
-                valores={obtenerDatosMermas().valores}
-              />
+              <p class="mb-3">He generado un gráfico de mermas; lo abrí en una vista ampliada.</p>
+              <button class="button is-small" on:click={() => { graficoActivo = { tipo: 'torta', titulo: 'Mermas mensuales por categoría', etiquetas: obtenerDatosMermas().etiquetas, valores: obtenerDatosMermas().valores }; graficoAbierto = true; }}>Abrir gráfico</button>
             </div>
           {/if}
         {/each}
@@ -148,6 +153,26 @@
       </form>
     </div>
   </div>
+
+  {#if graficoAbierto && graficoActivo}
+    <div class="grafico-modal-backdrop"></div>
+    <div class="grafico-modal">
+      <header class="grafico-modal-header">
+        <strong>{graficoActivo.titulo}</strong>
+        <button class="button is-small" on:click={() => { graficoAbierto = false; graficoActivo = null; }}>✕</button>
+      </header>
+      <div class="grafico-modal-body">
+        {#if graficoActivo.tipo === 'torta'}
+          <GraficoTorta titulo={graficoActivo.titulo} etiquetas={graficoActivo.etiquetas} valores={graficoActivo.valores} />
+        {:else}
+          <GraficoTorta titulo={graficoActivo.titulo} etiquetas={graficoActivo.etiquetas} valores={graficoActivo.valores} />
+        {/if}
+      </div>
+      <footer class="grafico-modal-footer">
+        <div class="grafico-explicacion">Resumen: muestra '{graficoActivo.titulo}'.</div>
+      </footer>
+    </div>
+  {/if}
 </section>
 
 <style>
@@ -165,6 +190,54 @@
     gap: 1rem;
     padding-right: 0.5rem;
   }
+
+  /* Modal styles para gráfico */
+  .grafico-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(2,6,23,0.45);
+    z-index: 1200;
+  }
+
+  .grafico-modal {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(900px, 90vw);
+    height: min(640px, 78vh);
+    background: rgba(255,255,255,0.98);
+    border-radius: 12px;
+    z-index: 1201;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(2,6,23,0.25);
+  }
+
+  .grafico-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--color-borde);
+  }
+
+  .grafico-modal-body {
+    flex: 1;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .grafico-modal-footer {
+    padding: 0.75rem 1rem;
+    border-top: 1px solid var(--color-borde);
+    background: linear-gradient(180deg, rgba(3,4,94,0.02), transparent);
+  }
+
+  .grafico-explicacion { line-height: 1.4; }
 
   .mensaje {
     padding: 1rem;

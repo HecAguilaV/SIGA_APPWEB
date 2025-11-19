@@ -44,10 +44,12 @@
 
 SIGA (Sistema Inteligente de Gestión de Activos) es un prototipo MVP de aplicación web ERP construido con **SvelteKit 5**, diseñado para simplificar y automatizar el control de inventario en tiempo real con asistencia de **IA conversacional**.
 
+ 
 ## 📋 Descripción
 
 Este proyecto es una aplicación moderna de página única (SPA) que permite a los usuarios gestionar productos, visualizar el stock por local y analizar datos de ventas. La interfaz es reactiva y cuenta con un **asistente virtual con voz** potenciado por **Gemini 2.5 Pro API**, que permite operaciones CRUD mediante comandos de voz o texto en lenguaje natural.
 
+ 
 ### ✨ Características destacadas
 
 - **Asistente IA con voz**: Reconocimiento de voz en español para operaciones CRUD
@@ -58,30 +60,40 @@ Este proyecto es una aplicación moderna de página única (SPA) que permite a l
 
 ## 🎯 Características
 
-### Gestión de Productos
+ 
+-### Gestión de Productos
+
 - Crear, editar y desactivar productos
 - Control de estado activo/inactivo
 - Validación automática de datos
 
-### Control de Inventario
+ 
+-### Control de Inventario
+
 - Visualización del stock de productos por local
 - Filtrado avanzado por local, producto, categoría y stock
 - Operaciones de agregar/reducir stock
 - Actualización en tiempo real
 
-### Análisis de Datos
+ 
+-### Análisis de Datos
+
 - Gráficos interactivos para analizar tendencias de ventas
 - Visualización de stock por local
 - Dashboard con métricas clave
 
-### Asistente Virtual con IA
+ 
+-### Asistente Virtual con IA
+
 - Reconocimiento de voz en español (Web Speech API)
 - Entrada multimodal: voz, texto y teclado
 - Procesamiento con Gemini 2.5 Pro
 - Operaciones CRUD automáticas mediante lenguaje natural
 - Panel flotante draggable con interfaz intuitiva
 
-### API Documentada
+ 
+-### API Documentada
+
 - Documentación OpenAPI/Swagger en `/api-docs`
 - Endpoints REST para todas las operaciones
 - Respuestas JSON estructuradas
@@ -100,14 +112,17 @@ Este proyecto es una aplicación moderna de página única (SPA) que permite a l
 | **Lenguaje** | JavaScript/TypeScript | ES2020+ | Desarrollo |
 | **Despliegue** | Vercel | Serverless | Hosting y CI/CD |
 
+ 
 ## 🚀 Instalación y Ejecución
 
+ 
 ### Requisitos previos
 
 - Node.js 18 o superior ([Descargar](https://nodejs.org/))
 - npm 9+ (incluido con Node.js)
 - Git para clonar el repositorio
 
+ 
 ### Pasos de instalación
 
 1. **Clonar el repositorio:**
@@ -122,11 +137,11 @@ Este proyecto es una aplicación moderna de página única (SPA) que permite a l
    ```
 
 3. **Configurar variables de entorno:**
-   
-   Crea un archivo `.env.local` en la raíz del proyecto:
-   ```bash
-   VITE_GEMINI_API_KEY=tu_clave_api_de_gemini
-   ```
+
+  Crea un archivo `.env.local` en la raíz del proyecto:
+  ```bash
+  GEMINI_API_KEY=tu_clave_api_de_gemini
+  ```
 
 4. **Iniciar el servidor de desarrollo:**
    ```bash
@@ -148,7 +163,7 @@ Este proyecto es una aplicación moderna de página única (SPA) que permite a l
 
 ### Resultado esperado de tests
 
-```
+```text
 ✅ TOTAL: 10 SUCCESS
 ```
 
@@ -156,7 +171,7 @@ Ver [COBERTURA_TESTING.md](./COBERTURA_TESTING.md) para detalles completos de lo
 
 ## 📁 Estructura del Proyecto
 
-```
+```text
 SIGA_PROTOTIPO/
 ├── src/
 │   ├── lib/

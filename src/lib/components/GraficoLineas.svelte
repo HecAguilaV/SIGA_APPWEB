@@ -16,6 +16,8 @@
   let lienzo;
   /** @type {import('chart.js').Chart | null} */
   let instanciaGrafico;
+  /** @type {CanvasGradient | null} */
+  let backgroundGradient = null;
 
   /**
    * Convierte un color hexadecimal a formato rgba.
@@ -63,6 +65,15 @@
     const relleno = colorRelleno || obtenerVariable('--color-secundario', '#00b4d8');
 
     const canvas = /** @type {HTMLCanvasElement} */ (lienzo);
+    const ctx = canvas.getContext('2d');
+    const gradient = ctx
+      ? ctx.createLinearGradient(0, 0, 0, canvas.height || 320)
+      : null;
+    if (gradient) {
+      gradient.addColorStop(0, hexToRgba(relleno, 0.25));
+      gradient.addColorStop(1, hexToRgba(relleno, 0.03));
+      backgroundGradient = gradient;
+    }
 
     instanciaGrafico = new Chart(canvas, {
       type: 'line',
@@ -73,7 +84,7 @@
             label: titulo,
             data: valores,
             borderColor: linea,
-            backgroundColor: hexToRgba(relleno, 0.1),
+            backgroundColor: backgroundGradient || hexToRgba(relleno, 0.1),
             fill: true,
             tension: 0.4,
             pointRadius: 5,
@@ -86,6 +97,10 @@
         ]
       },
       options: {
+        animation: {
+          duration: 700,
+          easing: 'easeOutQuart'
+        },
         responsive: true,
         maintainAspectRatio: false,
         interaction: {
@@ -142,6 +157,8 @@
   $: if (instanciaGrafico) {
     instanciaGrafico.data.labels = [...etiquetas];
     instanciaGrafico.data.datasets[0].data = [...valores];
+    const rell = colorRelleno || obtenerVariable('--color-secundario', '#00b4d8');
+    instanciaGrafico.data.datasets[0].backgroundColor = backgroundGradient || hexToRgba(rell, 0.1);
     instanciaGrafico.update();
   }
 </script>
