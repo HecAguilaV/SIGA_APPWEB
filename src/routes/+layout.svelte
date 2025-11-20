@@ -1,8 +1,8 @@
 <script>
   // Importamos los estilos globales y la barra de navegación compartida
-  import '../app.css';
-  import Navbar from '$lib/components/Navbar.svelte';
-  import AsistenteContextual from '$lib/components/AsistenteContextual.svelte';
+  import "../app.css";
+  import Navbar from "$lib/components/Navbar.svelte";
+  import AsistenteContextual from "$lib/components/AsistenteContextual.svelte";
 </script>
 
 <Navbar />
@@ -22,9 +22,9 @@
     </p>
     <p>
       <small>
-      © 2025 Todos los derechos reservados
-      <br />
-      Desarrollado por {'>'} Un Soñador con Poca RAM 👨🏻‍💻
+        © 2025 Todos los derechos reservados
+        <br />
+        Desarrollado por {">"} Un Soñador con Poca RAM 👨🏻‍💻
       </small>
     </p>
   </div>

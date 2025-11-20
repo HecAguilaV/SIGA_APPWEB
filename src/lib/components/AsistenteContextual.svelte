@@ -162,13 +162,9 @@
       };
     }
 
-    const mermas = negocio.mermasMes || [];
-    return {
-      tipo: "torta",
-      titulo: "Mermas por categoría",
-      etiquetas: mermas.map((m) => m.categoria),
-      valores: mermas.map((m) => m.cantidad),
-    };
+    // Si no coincide con ningún patrón, retornar null
+    // La IA debe decidir qué mostrar
+    return null;
   };
 
   const generarExplicacionGrafico = (grafico: any): string => {
@@ -338,64 +334,6 @@
     ];
     mensajeUsuario = "";
     estaPensando = true;
-    // Generación automática local de gráfico si la pregunta lo solicita
-    graficoGeneradoLocal = false;
-    try {
-      const esPeticionGrafico =
-        /gr[aá]fico|por local|ventas por local|comparativa|comparar|productos m[aá]s vendidos|m[aá]s vendidos|tendencia|por d[ií]a|ventas semanales/i;
-      if (esPeticionGrafico.test(contenido)) {
-        const posibleGrafico = generarGraficoDesdeSolicitud(
-          undefined,
-          contenido,
-        );
-        if (
-          posibleGrafico &&
-          posibleGrafico.etiquetas &&
-          posibleGrafico.valores &&
-          posibleGrafico.valores.length
-        ) {
-          graficoActivo = posibleGrafico;
-          console.log(
-            "[Asistente] graficoActivo generado (auto):",
-            posibleGrafico,
-          );
-          graficoAbierto = true;
-          graficoGeneradoLocal = true;
-          const explicacionLocal = generarExplicacionGrafico(posibleGrafico);
-          if (explicacionLocal) {
-            modalExplicacion = explicacionLocal;
-            mensajes = [
-              ...mensajes,
-              {
-                id: crypto.randomUUID(),
-                emisor: "siga",
-                tipo: "texto",
-                contenido: explicacionLocal,
-              },
-            ];
-          } else {
-            mensajes = [
-              ...mensajes,
-              {
-                id: crypto.randomUUID(),
-                emisor: "siga",
-                tipo: "texto",
-                contenido:
-                  "He generado un gráfico y lo abrí en una vista ampliada.",
-              },
-            ];
-          }
-          setTimeout(() => {
-            try {
-              inputMensaje?.focus();
-            } catch (e) {}
-          }, 150);
-        }
-      }
-    } catch (err) {
-      console.error("Error generando gráfico localmente:", err);
-      graficoGeneradoLocal = false;
-    }
     mensajeError = "";
 
     try {
@@ -414,69 +352,8 @@
       const datos = await respuesta.json();
       const textoIA = datos.respuesta ?? "Estoy aquí para ayudarte.";
 
-      // (Helpers de generación de gráfico movidos al scope del componente)
-
-      if (
-        !graficoGeneradoLocal &&
-        (textoIA.includes("[GRAFICO_TORTA]") ||
-          textoIA.includes("[GRAFICO_BARRAS]") ||
-          textoIA.includes("[GRAFICO_LINEAS]"))
-      ) {
-        const tipoSolicitado = textoIA.includes("[GRAFICO_LINEAS]")
-          ? "lineas"
-          : textoIA.includes("[GRAFICO_BARRAS]")
-            ? "barras"
-            : "torta";
-        const grafico = generarGraficoDesdeSolicitud(tipoSolicitado, contenido);
-
-        // Preparamos y abrimos la vista amplia del gráfico
-        // (No insertamos el gráfico completo en el historial para evitar ocupar la ventana del chat)
-        graficoActivo = grafico;
-        graficoAbierto = true;
-
-        // devolver el foco al input para que el usuario pueda seguir escribiendo
-        setTimeout(() => {
-          try {
-            inputMensaje?.focus();
-          } catch (e) {
-            // ignore
-          }
-        }, 150);
-
-        // generar explicación automática y añadirla como texto del asistente
-        const explicacion = generarExplicacionGrafico(grafico);
-        if (explicacion) {
-          mensajes = [
-            ...mensajes,
-            {
-              id: crypto.randomUUID(),
-              emisor: "siga",
-              tipo: "texto",
-              contenido: explicacion,
-            },
-          ];
-        } else {
-          // Mensaje breve informando al usuario que el gráfico se abrió en ventana
-          mensajes = [
-            ...mensajes,
-            {
-              id: crypto.randomUUID(),
-              emisor: "siga",
-              tipo: "texto",
-              contenido:
-                "He generado un gráfico y lo abrí en una vista ampliada.",
-            },
-          ];
-        }
-      }
-      // resetear bandera para la próxima interacción
-      graficoGeneradoLocal = false;
-
       const textoLimpio = textoIA
         .replace(/\[CRUD_START\][\s\S]*?\[CRUD_END\]/g, "")
-        .replace("[GRAFICO_TORTA]", "")
-        .replace("[GRAFICO_BARRAS]", "")
-        .replace("[GRAFICO_LINEAS]", "")
         .trim();
 
       // Detectar y procesar MÚLTIPLES CRUD
@@ -524,15 +401,24 @@
                   );
                 }
 
-                graficoActivo = graficoFromCrud;
-                modalExplicacion =
-                  generarExplicacionGrafico(graficoFromCrud) || "";
-                // abrir desde el centro (no hay elemento disparador en este flujo)
-                openModalFromElement(null);
-                console.log(
-                  "✅ CRUD grafico procesado e abierto en modal:",
-                  crudJSON.accion,
-                );
+                // Solo abrir el modal si tenemos datos válidos
+                if (
+                  graficoFromCrud &&
+                  graficoFromCrud.etiquetas &&
+                  graficoFromCrud.valores
+                ) {
+                  graficoActivo = graficoFromCrud;
+                  modalExplicacion =
+                    generarExplicacionGrafico(graficoFromCrud) || "";
+                  // abrir desde el centro (no hay elemento disparador en este flujo)
+                  openModalFromElement(null);
+                  console.log(
+                    "✅ CRUD grafico procesado e abierto en modal:",
+                    crudJSON.accion,
+                  );
+                } else {
+                  console.warn("⚠️ No se pudo generar el gráfico solicitado");
+                }
               } catch (err) {
                 console.error("Error procesando CRUD gráfico:", err);
               }
