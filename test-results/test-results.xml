@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<testsuite name="Chrome 141.0.0.0 (Windows 10)" package="SIGA Tests" timestamp="2025-10-20T06:27:12" id="0" hostname="AcerVeriton" tests="10" errors="0" failures="0" time="0.003">
+  <properties>
+    <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"/>
+  </properties>
+  <testcase name="Validador de Inventario Validación de SKU SKU debe tener formato válido (LETRAS-NÚMEROS)" time="0.001" classname=".Validador de Inventario Validación de SKU"/>
+  <testcase name="Validador de Inventario Validación de SKU acepta SKU con formato correcto" time="0" classname=".Validador de Inventario Validación de SKU"/>
+  <testcase name="Validador de Inventario Validación de SKU rechaza SKU inválido" time="0" classname=".Validador de Inventario Validación de SKU"/>
+  <testcase name="Validador de Inventario Validación de Stock retorna objeto con estructura correcta" time="0.001" classname=".Validador de Inventario Validación de Stock"/>
+  <testcase name="Validador de Inventario Validación de Stock stock debe ser número positivo" time="0" classname=".Validador de Inventario Validación de Stock"/>
+  <testcase name="Validador de Inventario Validación de Nombre de Producto lanza error si nombre está vacío" time="0" classname=".Validador de Inventario Validación de Nombre de Producto"/>
+  <testcase name="Validador de Inventario Validación de Nombre de Producto acepta nombre válido" time="0" classname=".Validador de Inventario Validación de Nombre de Producto"/>
+  <testcase name="Asistente IA procesar mensaje, detectar intención y ejecutar CRUD" time="0" classname=".Asistente IA"/>
+  <testcase name="Swagger API - Documentación OpenAPI endpoint /api/openapi retorna especificación válida" time="0.001" classname=".Swagger API - Documentación OpenAPI"/>
+  <testcase name="Operaciones CRUD de Inventario ejecutar operaciones CRUD completas" time="0" classname=".Operaciones CRUD de Inventario"/>
+  <system-out>
+    <![CDATA[Chrome 141.0.0.0 (Windows 10) ERROR
+  Some of your tests did a full page reload!
+,Chrome 141.0.0.0 (Windows 10) ERROR
+  Disconnected Client disconnected from CONNECTED state (transport close)
+
+]]>
+  </system-out>
+  <system-err/>
+</testsuite>

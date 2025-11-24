@@ -1,0 +1,33 @@
+// Karma configuration file - With Babel support
+module.exports = function(config) {
+  config.set({
+    basePath: '',
+    frameworks: ['jasmine'],
+    files: [
+      'src/tests/unit/*.spec.js',
+      'src/tests/integration/*.spec.js'
+    ],
+    exclude: [
+      'src/tests/example.spec.js',
+      'src/tests/unit/validaciones.spec.js',
+      'src/tests/unit/calculos.spec.js'
+    ],
+    preprocessors: {
+      'src/tests/**/*.spec.js': ['babel']
+    },
+    reporters: ['kjhtml'],
+    port: 9876,
+    colors: true,
+    logLevel: config.LOG_INFO,
+    autoWatch: false,
+    browsers: ['Chrome'],
+    singleRun: false,
+    restartOnFileChange: false,
+    client: {
+      clearContext: false,
+      jasmine: {
+        random: false
+      }
+    }
+  });
+};

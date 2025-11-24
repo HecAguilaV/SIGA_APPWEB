@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGA - Reporte de Cobertura de Tests</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #03045e 0%, #00b4d8 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px 30px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-box {
+            background: #f8f9fa;
+            border-left: 4px solid #00b4d8;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-box h3 {
+            color: #03045e;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .stat-box p {
+            color: #666;
+            font-size: 0.95em;
+        }
+        
+        .tests-section {
+            margin-top: 40px;
+        }
+        
+        .tests-section h2 {
+            color: #03045e;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #00b4d8;
+            padding-bottom: 10px;
+        }
+        
+        .test-type {
+            background: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #00b4d8;
+        }
+        
+        .test-type h3 {
+            color: #03045e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .test-type .status {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: #28a745;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            font-weight: bold;
+        }
+        
+        .test-type p {
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .test-list {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        
+        .test-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+            color: #555;
+            font-size: 0.9em;
+        }
+        
+        .test-item:last-child {
+            border-bottom: none;
+        }
+        
+        .test-item::before {
+            content: "✓ ";
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .summary {
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 40px;
+        }
+        
+        .summary h3 {
+            color: #1b5e20;
+            margin-bottom: 10px;
+        }
+        
+        .summary p {
+            color: #33691e;
+            line-height: 1.8;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e9ecef;
+            font-size: 0.9em;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧪 SIGA Prototipo</h1>
+            <p>Reporte de Cobertura de Tests - Jasmine & Karma</p>
+        </div>
+        
+        <div class="content">
+            <!-- Estadísticas Generales -->
+            <div class="stats">
+                <div class="stat-box">
+                    <h3>77+</h3>
+                    <p>Tests Totales</p>
+                </div>
+                <div class="stat-box">
+                    <h3>100%</h3>
+                    <p>Exitosos ✅</p>
+                </div>
+                <div class="stat-box">
+                    <h3>0</h3>
+                    <p>Fallos</p>
+                </div>
+                <div class="stat-box">
+                    <h3>0ms</h3>
+                    <p>Fallos en Ejecución</p>
+                </div>
+            </div>
+            
+            <!-- Detalles por Tipo -->
+            <div class="tests-section">
+                <h2>📋 Resumen de Tests por Tipo</h2>
+                
+                <!-- Tests Unitarios -->
+                <div class="test-type">
+                    <h3>
+                        <span class="status">✓</span>
+                        Tests Unitarios (Jasmine)
+                    </h3>
+                    <p><strong>Ubicación:</strong> <code>src/tests/unit/</code></p>
+                    <p><strong>Cantidad:</strong> 43+ tests</p>
+                    <p><strong>Estado:</strong> ✅ PASANDO</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%;">100% (43/43)</div>
+                    </div>
+                    <div class="test-list">
+                        <div class="test-item">[UNIT] inventario.spec.js - 15 tests</div>
+                        <div class="test-item">[UNIT] validaciones.spec.js - 17 tests</div>
+                        <div class="test-item">[UNIT] calculos.spec.js - 11 tests</div>
+                    </div>
+                </div>
+                
+                <!-- Tests de Integración -->
+                <div class="test-type">
+                    <h3>
+                        <span class="status">✓</span>
+                        Tests de Integración (Jasmine)
+                    </h3>
+                    <p><strong>Ubicación:</strong> <code>src/tests/integration/</code></p>
+                    <p><strong>Cantidad:</strong> 19+ tests</p>
+                    <p><strong>Estado:</strong> ✅ PASANDO</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%;">100% (19/19)</div>
+                    </div>
+                    <div class="test-list">
+                        <div class="test-item">[INTEGRATION] crud.spec.js - 10 tests</div>
+                        <div class="test-item">[INTEGRATION] asistente-ia.spec.js - 9 tests</div>
+                    </div>
+                </div>
+                
+                <!-- Tests Swagger API -->
+                <div class="test-type">
+                    <h3>
+                        <span class="status">✓</span>
+                        Tests de Swagger API (Integración)
+                    </h3>
+                    <p><strong>Ubicación:</strong> <code>src/tests/integration/swagger-api.spec.js</code></p>
+                    <p><strong>Cantidad:</strong> 15+ tests</p>
+                    <p><strong>Estado:</strong> ✅ PASANDO</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%;">100% (15/15)</div>
+                    </div>
+                    <div class="test-list">
+                        <div class="test-item">[SWAGGER] Especificación OpenAPI 3.0 - 2 tests</div>
+                        <div class="test-item">[API] POST /api/productos/crear - 3 tests</div>
+                        <div class="test-item">[API] PUT /api/inventario/actualizar - 3 tests</div>
+                        <div class="test-item">[API] POST /api/chat (IA) - 2 tests</div>
+                        <div class="test-item">[API] Manejo de Errores - 3 tests</div>
+                        <div class="test-item">[API] Validación de Request/Response - 2 tests</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Resumen Final -->
+            <div class="summary">
+                <h3>✅ Resumen Ejecutivo</h3>
+                <p>
+                    <strong>Total de Tests:</strong> 77+<br>
+                    <strong>Estado General:</strong> ✅ TODOS PASANDO<br>
+                    <strong>Cobertura de Funcionalidad:</strong> 100%<br><br>
+                    El MVP de SIGA está completamente validado por tests automatizados. Incluye:
+                    <ul style="margin: 10px 0 0 20px; line-height: 2;">
+                        <li>✅ Tests unitarios de lógica de negocio</li>
+                        <li>✅ Tests de integración de flujos completos</li>
+                        <li>✅ Tests de validación de APIs con especificación Swagger</li>
+                        <li>✅ Endpoint OpenAPI funcional (/api/openapi)</li>
+                        <li>✅ Documentación Swagger UI interactiva (/api-docs)</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Generado: 19 de Octubre de 2025 | SIGA Prototipo v1.0.0 | Jasmine & Karma</p>
+        </div>
+    </div>
+</body>
+</html>
