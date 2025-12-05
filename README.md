@@ -8,7 +8,7 @@
   [![Node.js](https://img.shields.io/badge/node.js-18+-green)](https://nodejs.org/)
   [![Tests](https://img.shields.io/badge/tests-10%2F10-success)](./COBERTURA_TESTING.md)
 
-  ### 🚀 Tecnologías
+  ### Tecnologías
 
   <p>
     <img src="https://img.shields.io/badge/Svelte-FF3E00?style=for-the-badge&logo=svelte&logoColor=white" alt="Svelte"/>
@@ -44,11 +44,11 @@
 
 SIGA (Sistema Inteligente de Gestión de Activos) es un prototipo MVP de aplicación web ERP construido con **SvelteKit 5**, diseñado para simplificar y automatizar el control de inventario en tiempo real con asistencia de **IA conversacional**.
 
-## 📋 Descripción
+## Descripción
 
 Este proyecto es una aplicación moderna de página única (SPA) que permite a los usuarios gestionar productos, visualizar el stock por local y analizar datos de ventas. La interfaz es reactiva y cuenta con un **asistente virtual con voz** potenciado por **Gemini 2.5 Pro API**, que permite operaciones CRUD mediante comandos de voz o texto en lenguaje natural.
 
-### ✨ Características destacadas
+### Características destacadas
 
 - **Asistente IA con voz**: Reconocimiento de voz en español para operaciones CRUD
 - **Procesamiento en lenguaje natural**: Entiende comandos contextuales e incompletos
@@ -56,7 +56,7 @@ Este proyecto es una aplicación moderna de página única (SPA) que permite a l
 - **Estado compartido**: Sincronización automática entre todos los componentes
 - **API REST documentada**: Especificación OpenAPI/Swagger integrada
 
-## 🎯 Características
+## Características
 
 ### Gestión de Productos
 - Crear, editar y desactivar productos
@@ -86,7 +86,7 @@ Este proyecto es una aplicación moderna de página única (SPA) que permite a l
 - Endpoints REST para todas las operaciones
 - Respuestas JSON estructuradas
 
-## 🛠️ Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 | Categoría | Tecnología | Versión | Uso |
 |-----------|-----------|---------|-----|
@@ -100,7 +100,7 @@ Este proyecto es una aplicación moderna de página única (SPA) que permite a l
 | **Lenguaje** | JavaScript/TypeScript | ES2020+ | Desarrollo |
 | **Despliegue** | Vercel | Serverless | Hosting y CI/CD |
 
-## 🚀 Instalación y Ejecución
+## Instalación y Ejecución
 
 ### Requisitos previos
 
@@ -135,7 +135,7 @@ Este proyecto es una aplicación moderna de página única (SPA) que permite a l
    
    La aplicación estará disponible en `http://localhost:5173`
 
-## 📝 Scripts Disponibles
+## Scripts Disponibles
 
 | Comando | Descripción |
 |---------|-------------|
@@ -149,12 +149,12 @@ Este proyecto es una aplicación moderna de página única (SPA) que permite a l
 ### Resultado esperado de tests
 
 ```
-✅ TOTAL: 10 SUCCESS
+TOTAL: 10 SUCCESS
 ```
 
 Ver [COBERTURA_TESTING.md](./COBERTURA_TESTING.md) para detalles completos de los tests.
 
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 SIGA_PROTOTIPO/
@@ -221,7 +221,7 @@ SIGA_PROTOTIPO/
 └── README.md                        # Este archivo
 ```
 
-## 🤖 Asistente IA - Cómo funciona
+## Asistente IA - Cómo funciona
 
 ### Flujo de interacción
 
@@ -259,7 +259,7 @@ IA: Interpreta "3 unidades en Ibáñez y 3 en Serena"
 - **Auto-focus** en el input después de cada mensaje
 - **Procesamiento contextual** que entiende referencias implícitas
 
-## 🌐 API REST
+## API REST
 
 La API del proyecto está documentada utilizando la especificación OpenAPI y puede ser visualizada en la ruta `/api-docs`.
 
@@ -310,7 +310,7 @@ Actualiza el stock de un producto.
 
 Ver documentación completa en `/api-docs` cuando la aplicación esté corriendo.
 
-## 🧪 Testing
+## Testing
 
 Para ejecutar los tests, utiliza el siguiente comando:
 
@@ -354,7 +354,7 @@ Los tests se volverán a ejecutar automáticamente cuando detecten cambios en el
 Para más información sobre la estrategia de testing y cobertura, consulta:
 - [COBERTURA_TESTING.md](./COBERTURA_TESTING.md) - Cobertura completa
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Error: "npm not found"
 ```bash
@@ -384,12 +384,12 @@ rm -rf node_modules package-lock.json
 npm install
 ```
 
-## 📚 Documentación adicional
+## Documentación adicional
 
 - **[ERS.md](./ERS.md)** - Especificación de Requisitos del Sistema
 - **[COBERTURA_TESTING.md](./COBERTURA_TESTING.md)** - Cobertura y estrategia de testing
 
-## 🤝 Contribuir
+## Contribuir
 
 Las contribuciones son bienvenidas. Para contribuir:
 
@@ -399,11 +399,11 @@ Las contribuciones son bienvenidas. Para contribuir:
 4. Push a la rama (`git push origin feature/NuevaCaracteristica`)
 5. Abre un Pull Request
 
-## 📄 Licencia
+## Licencia
 
 Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](./LICENSE) para más detalles.
 
-## 👥 Autor
+## Autor
 
 - **Héctor Aguila** - [HecAguilaV](https://github.com/HecAguilaV)
 - Estudiante de Ingeniería Informática - **Duoc UC**
@@ -420,8 +420,8 @@ Este proyecto está en desarrollo con el siguiente stack:
 
 ---
 
-**Estado del proyecto:** ✅ MVP Completo - 10/10 Tests Pasando  
+**Estado del proyecto:** MVP Completo - 10/10 Tests Pasando  
 **Versión:** 1.0.0  
 **Última actualización:** Octubre 2025
 
-Desarrollado por "Un Soñador con Poca RAM 🧑🏼‍💻" - **SIGA**
+Desarrollado por "Un Soñador con Poca RAM" - **SIGA**
